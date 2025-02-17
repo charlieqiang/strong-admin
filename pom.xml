@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -7,11 +6,56 @@
     <groupId>com.strong</groupId>
     <artifactId>strong-admin</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <description>strong管理后台</description>
 
     <properties>
+        <!-- Java 版本 -->
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+
+        <!-- 编码格式 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- 统一依赖版本 -->
+        <spring-boot.version>3.0.5</spring-boot.version>
+        <mysql.version>8.0.33</mysql.version>
+        <mybatis.version>3.0.3</mybatis.version>
+        <druid.version>1.2.8</druid.version>
+        <fastjson.version>2.0.53</fastjson.version>
+        <kaptcha.version>2.3.3</kaptcha.version>
     </properties>
 
+    <modules>
+        <module>strong-admin-sercurity</module>
+        <module>strong-admin-system</module>
+        <module>strong-admin-startup</module>
+        <module>strong-admin-common</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Spring Boot parent POM，使用 properties 管理版本 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- Spring Boot Maven Plugin -->
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>
