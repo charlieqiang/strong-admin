@@ -1,0 +1,25 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/strong_admin?characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    username: root
+    password: root
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 20MB
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password: root
+      database: 0
+
+mybatis:
+  mapper-locations: classpath*:mapper/**/*.xml
+  configuration:
+    cache-enabled: false
+    local-cache-scope: statement

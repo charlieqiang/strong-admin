@@ -6,11 +6,11 @@ import com.strong.common.constant.CacheConstants;
 import com.strong.common.constant.Constants;
 import com.strong.common.entity.result.Result;
 import com.strong.common.enums.SystemCodeEnum;
+import com.strong.common.util.sign.Base64;
 import com.strong.common.util.snowflakeid.SnowflakeIdWorker;
 import com.strong.sercurity.vo.CaptchaVo;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.codec.Base64;
 import org.springframework.util.FastByteArrayOutputStream;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +31,8 @@ import java.util.concurrent.TimeUnit;
 public class CaptchaController {
     @Resource(name = "captchaProducer")
     private Producer captchaProducer;
+    @Resource(name = "captchaProducerMath")
+    private Producer captchaProducerMath;
 
     @Autowired
     private RedisCache redisCache;
@@ -48,8 +50,10 @@ public class CaptchaController {
         BufferedImage image;
 
         // 生成验证码
-        capStr = code = captchaProducer.createText();
-        image = captchaProducer.createImage(capStr);
+        String capText = captchaProducerMath.createText();
+        capStr = capText.substring(0, capText.lastIndexOf("@"));
+        code = capText.substring(capText.lastIndexOf("@") + 1);
+        image = captchaProducerMath.createImage(capStr);
 
         redisCache.setCacheObject(verifyKey, code, Constants.CAPTCHA_EXPIRATION, TimeUnit.MINUTES);
 

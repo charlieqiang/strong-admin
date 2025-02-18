@@ -10,7 +10,7 @@ public class CaptchaVo implements Serializable {
     private static final long serialVersionUID = -1507136866487804605L;
 
     private String captchaId;
-    private byte[] captchaImg;
+    private String captchaImg;
 
     public String getCaptchaId() {
         return captchaId;
@@ -20,11 +20,11 @@ public class CaptchaVo implements Serializable {
         this.captchaId = captchaId;
     }
 
-    public byte[] getCaptchaImg() {
+    public String getCaptchaImg() {
         return captchaImg;
     }
 
-    public void setCaptchaImg(byte[] captchaImg) {
+    public void setCaptchaImg(String captchaImg) {
         this.captchaImg = captchaImg;
     }
 }
