@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2025/2/13 10:03
  **/
 @RestController
-@RequestMapping("/public/user")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired

@@ -1,12 +1,15 @@
 package com.strong.system.entity;
 
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author charlie
  */
-public class User {
+public class User implements Serializable {
+
+    private static final long serialVersionUID = 8721930095269144717L;
 
     private String id;
     private String username;

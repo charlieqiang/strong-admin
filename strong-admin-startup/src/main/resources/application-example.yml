@@ -11,15 +11,21 @@ spring:
       enabled: true
       max-file-size: 10MB
       max-request-size: 20MB
-  data:
-    redis:
-      host: 127.0.0.1
-      port: 6379
-      password: root
-      database: 0
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: root
+    database: 0
 
 mybatis:
   mapper-locations: classpath*:mapper/**/*.xml
   configuration:
     cache-enabled: false
     local-cache-scope: statement
+
+token:
+  secret: abcdefghijklmnopqrstuvwxyz
+  expireTime: 30
+
+captcha:
+  expiration: 5

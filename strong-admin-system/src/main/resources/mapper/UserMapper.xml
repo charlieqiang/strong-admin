@@ -5,7 +5,7 @@
 <mapper namespace="com.strong.system.mapper.UserMapper">
 
     <sql id="Base_Column_List">
-        id, username, account, avatar, dept_id, phone, hired_date, use_status
+        id, username, password, account, avatar, dept_id, phone, hired_date, use_status
     </sql>
 
     <resultMap id="UserMap" type="com.strong.system.entity.User">
@@ -21,5 +21,10 @@
 
     <select id="getUserById" parameterType="String" resultMap="UserMap">
         SELECT <include refid="Base_Column_List" /> FROM user WHERE id = #{id}
+    </select>
+
+
+    <select id="getUserByAccount" parameterType="String" resultMap="UserMap">
+        SELECT <include refid="Base_Column_List" /> FROM user WHERE account = #{account}
     </select>
 </mapper>

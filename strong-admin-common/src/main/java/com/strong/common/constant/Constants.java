@@ -7,7 +7,7 @@ package com.strong.common.constant;
  */
 public class Constants {
     /**
-     * 验证码有效期（分钟）
+     * 令牌ID键值
      */
-    public static final Integer CAPTCHA_EXPIRATION = 2;
+    public static final String LOGIN_USER_TOKEN_ID = "LOGIN_USER_TOKEN_ID";
 }

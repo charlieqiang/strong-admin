@@ -16,4 +16,12 @@ public interface UserMapper {
      * @return
      */
     User getUserById(String id);
+
+    /**
+     * 通过acount查询用户
+     *
+     * @param account
+     * @return
+     */
+    User getUserByAccount(String account);
 }

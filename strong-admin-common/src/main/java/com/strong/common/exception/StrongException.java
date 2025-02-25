@@ -1,6 +1,7 @@
 package com.strong.common.exception;
 
 import com.strong.common.entity.result.ResultCode;
+import com.strong.common.enums.SystemCodeEnum;
 
 public class StrongException extends BusinessException {
 
@@ -20,4 +21,7 @@ public class StrongException extends BusinessException {
         super(resultCode, str);
     }
 
+    public StrongException(String str) {
+        super(SystemCodeEnum.OPERATE_ERROR, str);
+    }
 }
