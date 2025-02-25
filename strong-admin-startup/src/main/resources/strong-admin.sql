@@ -1,7 +1,6 @@
 create database strong_admin;
 use strong_admin;
 
--- auto-generated definition
 DROP TABLE IF EXISTS user;
 create table user
 (
@@ -19,3 +18,6 @@ create table user
         unique (account)
 );
 
+INSERT INTO user (id, account, password, username, avatar, dept_id, phone, hired_date, use_status)
+VALUES ('1337099190874624000', 'admin', '$2a$10$wG6s3Cba0wW3wWR9/RCLMekri1hObqryKabOfU6snjKT33BoFunT.', 'admin', null,
+        '1337099190874624000', null, null, 1);
