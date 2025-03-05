@@ -1,5 +1,7 @@
-package com.strong.system.entity;
+package com.strong.common.entity.system;
 
+
+import com.strong.common.entity.BaseEntity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,7 +9,7 @@ import java.util.Date;
 /**
  * @author charlie
  */
-public class User implements Serializable {
+public class User extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 8721930095269144717L;
 

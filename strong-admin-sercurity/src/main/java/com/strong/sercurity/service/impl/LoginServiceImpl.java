@@ -4,7 +4,7 @@ import com.strong.common.cache.RedisCache;
 import com.strong.common.constant.CacheConstants;
 import com.strong.common.exception.StrongException;
 import com.strong.sercurity.context.AuthenticationContextHolder;
-import com.strong.sercurity.entity.LoginUser;
+import com.strong.common.entity.security.LoginUser;
 import com.strong.sercurity.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

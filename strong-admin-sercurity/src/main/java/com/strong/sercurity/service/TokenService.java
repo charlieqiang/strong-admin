@@ -1,6 +1,6 @@
 package com.strong.sercurity.service;
 
-import com.strong.sercurity.entity.LoginUser;
+import com.strong.common.entity.security.LoginUser;
 
 import javax.servlet.http.HttpServletRequest;
 

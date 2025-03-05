@@ -19,5 +19,5 @@ create table user
 );
 
 INSERT INTO user (id, account, password, username, avatar, dept_id, phone, hired_date, use_status)
-VALUES ('1337099190874624000', 'admin', '$2a$10$wG6s3Cba0wW3wWR9/RCLMekri1hObqryKabOfU6snjKT33BoFunT.', 'admin', null,
+VALUES ('1337099190874624000', 'admin', '$2a$10$wG6s3Cba0wW3wWR9/RCLMekri1hObqryKabOfU6snjKT33BoFunT.', 'admin', 'http://cdn.chenlinqiang.cn/placeholder/avatar.gif',
         '1337099190874624000', null, null, 1);

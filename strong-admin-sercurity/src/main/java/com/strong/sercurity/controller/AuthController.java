@@ -1,7 +1,7 @@
 package com.strong.sercurity.controller;
 
 import com.strong.common.entity.result.Result;
-import com.strong.sercurity.entity.LoginUser;
+import com.strong.common.entity.security.LoginUser;
 import com.strong.sercurity.param.LoginParam;
 import com.strong.sercurity.service.LoginService;
 import com.strong.sercurity.service.TokenService;

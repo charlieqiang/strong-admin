@@ -1,6 +1,6 @@
 package com.strong.sercurity.filter;
 
-import com.strong.sercurity.entity.LoginUser;
+import com.strong.common.entity.security.LoginUser;
 import com.strong.sercurity.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

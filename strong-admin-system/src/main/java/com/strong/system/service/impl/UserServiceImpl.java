@@ -1,6 +1,6 @@
 package com.strong.system.service.impl;
 
-import com.strong.system.entity.User;
+import com.strong.common.entity.system.User;
 import com.strong.system.mapper.UserMapper;
 import com.strong.system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

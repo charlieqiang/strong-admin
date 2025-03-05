@@ -1,7 +1,7 @@
-package com.strong.sercurity.entity;
+package com.strong.common.entity.security;
 
 import com.alibaba.fastjson2.annotation.JSONField;
-import com.strong.system.entity.User;
+import com.strong.common.entity.system.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,59 +16,26 @@ import java.util.Set;
 public class LoginUser implements UserDetails {
     private static final long serialVersionUID = -6923226626448528752L;
 
-    /**
-     * 用户ID
-     */
     private String userId;
 
-    /**
-     * 部门ID
-     */
     private String deptId;
 
-    /**
-     * 用户Token唯一标识
-     */
     private String tokenId;
 
-    /**
-     * 登录时间
-     */
     private Long loginTime;
 
-    /**
-     * 过期时间
-     */
     private Long expireTime;
 
-    /**
-     * 登录IP地址
-     */
     private String ipaddr;
 
-    /**
-     * 登录地点
-     */
     private String loginLocation;
 
-    /**
-     * 浏览器类型
-     */
     private String browser;
 
-    /**
-     * 操作系统
-     */
     private String os;
 
-    /**
-     * 权限列表
-     */
     private Set<String> permissions;
 
-    /**
-     * 用户信息
-     */
     private User user;
 
     public LoginUser()

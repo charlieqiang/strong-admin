@@ -8,7 +8,7 @@
         id, username, password, account, avatar, dept_id, phone, hired_date, use_status
     </sql>
 
-    <resultMap id="UserMap" type="com.strong.system.entity.User">
+    <resultMap id="UserMap" type="com.strong.common.entity.system.User">
         <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="account" property="account"/>

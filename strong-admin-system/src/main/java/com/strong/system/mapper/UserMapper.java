@@ -1,6 +1,6 @@
 package com.strong.system.mapper;
 
-import com.strong.system.entity.User;
+import com.strong.common.entity.system.User;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

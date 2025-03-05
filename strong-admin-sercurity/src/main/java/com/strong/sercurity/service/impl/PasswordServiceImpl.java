@@ -1,12 +1,14 @@
 package com.strong.sercurity.service.impl;
 
+import com.strong.common.enums.SystemCodeEnum;
 import com.strong.common.exception.StrongException;
 import com.strong.sercurity.context.AuthenticationContextHolder;
 import com.strong.sercurity.service.PasswordService;
-import com.strong.system.entity.User;
+import com.strong.common.entity.system.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 /**
  * 登录密码方法
@@ -20,7 +22,7 @@ public class PasswordServiceImpl implements PasswordService {
         Authentication usernamePasswordAuthenticationToken = AuthenticationContextHolder.getContext();
         String password = usernamePasswordAuthenticationToken.getCredentials().toString();
         if (!matches(user, password)) {
-            throw new StrongException("密码错误");
+            throw new StrongException(SystemCodeEnum.LOGIN_MSG_ERROR);
         }
     }
 

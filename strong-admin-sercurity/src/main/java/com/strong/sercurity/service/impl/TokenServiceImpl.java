@@ -5,7 +5,7 @@ import com.strong.common.constant.CacheConstants;
 import com.strong.common.constant.Constants;
 import com.strong.common.exception.StrongException;
 import com.strong.common.util.snowflakeid.SnowflakeIdWorker;
-import com.strong.sercurity.entity.LoginUser;
+import com.strong.common.entity.security.LoginUser;
 import com.strong.sercurity.service.TokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -27,11 +27,9 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class TokenServiceImpl implements TokenService {
 
-    // 令牌秘钥
     @Value("${token.secret}")
     private String secret;
 
-    // 令牌有效期（默认30分钟）
     @Value("${token.expireTime}")
     private int expireTime;
 

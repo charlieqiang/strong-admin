@@ -9,6 +9,10 @@ import com.strong.common.entity.result.ResultCode;
 public enum SystemCodeEnum implements ResultCode {
     SUCCESS(200, "操作成功"),
     OPERATE_ERROR(201, "操作失败"),
+    ILLEGAL_TOKEN(508, "非法令牌"),
+    OTHER_CLIENTS(512, "跨域请求"),
+    TOKEN_EXPIRED(512, "令牌失效"),
+    LOGIN_MSG_ERROR(624, "账号或密码错误"),
     ;
 
     private final int code;

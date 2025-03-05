@@ -1,9 +1,9 @@
 package com.strong.sercurity.service.impl;
 
 import com.strong.common.exception.StrongException;
-import com.strong.sercurity.entity.LoginUser;
+import com.strong.common.entity.security.LoginUser;
 import com.strong.sercurity.service.PasswordService;
-import com.strong.system.entity.User;
+import com.strong.common.entity.system.User;
 import com.strong.system.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
