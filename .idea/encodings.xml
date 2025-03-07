@@ -3,10 +3,11 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/strong-admin-api/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/strong-admin-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/strong-admin-common/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/strong-admin-sercurity/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/strong-admin-sercurity/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/strong-admin-security/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/strong-admin-security/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/strong-admin-startup/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/strong-admin-startup/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/strong-admin-system/src/main/java" charset="UTF-8" />

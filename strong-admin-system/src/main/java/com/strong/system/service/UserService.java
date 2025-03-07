@@ -1,6 +1,7 @@
 package com.strong.system.service;
 
-import com.strong.common.entity.system.User;
+
+import com.strong.system.entity.User;
 
 /**
  * @author charlie

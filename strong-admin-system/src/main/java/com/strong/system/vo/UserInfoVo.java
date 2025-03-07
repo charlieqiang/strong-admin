@@ -1,6 +1,6 @@
 package com.strong.system.vo;
 
-import com.strong.common.entity.system.User;
+import com.strong.api.system.dto.UserDto;
 
 import java.io.Serializable;
 import java.util.List;
@@ -16,7 +16,7 @@ public class UserInfoVo implements Serializable {
     private String avatar;
     private String name;
 
-    public UserInfoVo(User user) {
+    public UserInfoVo(UserDto user) {
         this.avatar = user.getAvatar();
         this.name = user.getUsername();
     }

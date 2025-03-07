@@ -1,9 +1,10 @@
 package com.strong.system.controller;
 
+import com.strong.api.security.dto.LoginUserDto;
+import com.strong.api.security.service.ApiSecurityService;
+import com.strong.api.system.dto.UserDto;
 import com.strong.common.entity.result.Result;
-import com.strong.common.entity.security.LoginUser;
-import com.strong.common.util.sercurity.SecurityUtils;
-import com.strong.common.entity.system.User;
+import com.strong.system.entity.User;
 import com.strong.system.service.UserService;
 import com.strong.system.vo.UserInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ApiSecurityService apiSecurityService;
+
     @GetMapping("/{id}")
     public Result<User> getUserById(@PathVariable String id) {
         User user = userService.getUserById(id);
@@ -31,8 +35,8 @@ public class UserController {
 
     @GetMapping("/info")
     public Result<UserInfoVo> getUserInfo() {
-        LoginUser loginUser = SecurityUtils.getLoginUser();
-        User user = loginUser.getUser();
+        LoginUserDto loginUser = apiSecurityService.getLoginUser();
+        UserDto user = loginUser.getUserDto();
         UserInfoVo userInfoVo = new UserInfoVo(user);
         return Result.success(userInfoVo);
     }

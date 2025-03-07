@@ -31,10 +31,11 @@
     </properties>
 
     <modules>
-        <module>strong-admin-sercurity</module>
+        <module>strong-admin-security</module>
         <module>strong-admin-system</module>
         <module>strong-admin-startup</module>
         <module>strong-admin-common</module>
+        <module>strong-admin-api</module>
     </modules>
 
     <dependencyManagement>
