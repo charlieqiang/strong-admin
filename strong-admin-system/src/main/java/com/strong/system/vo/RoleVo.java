@@ -8,7 +8,7 @@ import java.util.List;
  * @date 2025/3/11 13:19
  **/
 public class RoleVo implements Serializable {
-    private static final long serialVersionUID = -4034159858853752403L;
+    private static final long serialVersionUID = -1896742746858966378L;
 
     private String id;
     private String key;

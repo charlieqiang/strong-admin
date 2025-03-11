@@ -1,6 +1,7 @@
 package com.strong.system.service;
 
 import com.strong.system.vo.RoleVo;
+import com.strong.system.vo.RouteVo;
 
 import java.util.List;
 
@@ -15,4 +16,11 @@ public interface RoleService {
      * @return
      */
     List<RoleVo> queryAllRoles();
+
+    /**
+     * 获取所有菜单列表
+     *
+     * @return
+     */
+    List<RouteVo> queryAllRoutes();
 }

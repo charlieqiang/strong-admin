@@ -25,6 +25,7 @@ mybatis:
 
 token:
   secret: abcdefghijklmnopqrstuvwxyz
+  # 30分钟
   expireTime: 30
 
 captcha:
