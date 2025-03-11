@@ -71,6 +71,7 @@ create table if not exists role
     id          varchar(64)          not null comment '主键' primary key,
     name        varchar(100)         not null comment '角色名称',
     code        varchar(100)         not null comment '角色编码',
+    description varchar(200)         null comment '角色描述',
     creator     varchar(64)          null comment '创建人',
     create_time datetime             null comment '创建时间',
     modifier    varchar(64)          null comment '修改人',
@@ -78,8 +79,15 @@ create table if not exists role
     deleted     tinyint(1) default 0 not null comment '逻辑删除，0否，1是'
 );
 
-INSERT INTO role (id, name, code, creator, create_time, modifier, modify_time, deleted)
-VALUES ('1347614852273360898', '管理员', 'admin', null, null, null, null, 0);
+INSERT INTO strong_admin.role (id, name, code, description, creator, create_time, modifier, modify_time, deleted)
+VALUES ('1349007709605416968', 'editor', 'editor', 'Normal Editor. Can see all pages except permission page', null,
+        null, null, null, DEFAULT);
+INSERT INTO strong_admin.role (id, name, code, description, creator, create_time, modifier, modify_time, deleted)
+VALUES ('1349007709605416969', 'visitor', 'visitor', 'Just a visitor. Can only see the home page and the document page',
+        null, null, null, null, DEFAULT);
+INSERT INTO strong_admin.role (id, name, code, description, creator, create_time, modifier, modify_time, deleted)
+VALUES ('1347614852273360898', 'admin', 'admin', 'Super Administrator. Have access to view all pages.', null, null,
+        null, null, 0);
 
 DROP TABLE IF EXISTS role_menu;
 create table if not exists role_menu
