@@ -3,6 +3,8 @@ package com.strong.system.mapper;
 import com.strong.system.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @author charlie
  * @date 2025/2/13 11:24
@@ -24,4 +26,11 @@ public interface UserMapper {
      * @return
      */
     User getUserByAccount(String account);
+
+    /**
+     * 通过userId查询roles
+     * @param userId
+     * @return
+     */
+    List<String> getUserRolesById(String userId);
 }

@@ -2,6 +2,7 @@ package com.strong.system.service;
 
 
 import com.strong.system.entity.User;
+import com.strong.system.vo.UserInfoVo;
 
 /**
  * @author charlie
@@ -23,4 +24,7 @@ public interface UserService {
      * @return
      */
     User getUserByAccount(String account);
+
+
+    UserInfoVo getUserInfoById(String userId);
 }

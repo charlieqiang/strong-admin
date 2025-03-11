@@ -4,6 +4,7 @@ import com.strong.api.security.dto.LoginUserDto;
 import com.strong.api.security.service.ApiSecurityService;
 import com.strong.api.system.dto.UserDto;
 import com.strong.common.entity.result.Result;
+import com.strong.common.exception.CustomizeException;
 import com.strong.system.entity.User;
 import com.strong.system.service.UserService;
 import com.strong.system.vo.UserInfoVo;
@@ -36,8 +37,10 @@ public class UserController {
     @GetMapping("/info")
     public Result<UserInfoVo> getUserInfo() {
         LoginUserDto loginUser = apiSecurityService.getLoginUser();
-        UserDto user = loginUser.getUserDto();
-        UserInfoVo userInfoVo = new UserInfoVo(user);
+        if (loginUser == null) {
+            throw new CustomizeException("查无用户信息");
+        }
+        UserInfoVo userInfoVo = userService.getUserInfoById(loginUser.getUserId());
         return Result.success(userInfoVo);
     }
 }

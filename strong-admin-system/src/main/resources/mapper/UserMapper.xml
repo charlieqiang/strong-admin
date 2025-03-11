@@ -27,4 +27,11 @@
     <select id="getUserByAccount" parameterType="String" resultMap="UserMap">
         SELECT <include refid="Base_Column_List" /> FROM user WHERE account = #{account}
     </select>
+
+    <select id="getUserRolesById" parameterType="String" resultType="string">
+        SELECT role.code FROM user
+        JOIN user_role ON user.id = user_role.user_id
+        JOIN role ON role.id = user_role.role_id
+        WHERE user.id = #{id}
+    </select>
 </mapper>

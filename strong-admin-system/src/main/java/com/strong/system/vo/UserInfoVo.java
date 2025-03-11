@@ -16,6 +16,9 @@ public class UserInfoVo implements Serializable {
     private String avatar;
     private String name;
 
+    public UserInfoVo() {
+    }
+
     public UserInfoVo(UserDto user) {
         this.avatar = user.getAvatar();
         this.name = user.getUsername();

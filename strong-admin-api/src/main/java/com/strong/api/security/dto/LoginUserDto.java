@@ -15,8 +15,6 @@ public class LoginUserDto implements Serializable {
 
     private String userId;
 
-    private String deptId;
-
     private String tokenId;
 
     private Long loginTime;
@@ -31,8 +29,6 @@ public class LoginUserDto implements Serializable {
 
     private String os;
 
-    private Set<String> permissions;
-
     private UserDto user;
 
     public String getUserId() {
@@ -41,14 +37,6 @@ public class LoginUserDto implements Serializable {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public String getDeptId() {
-        return deptId;
-    }
-
-    public void setDeptId(String deptId) {
-        this.deptId = deptId;
     }
 
     public String getTokenId() {
@@ -105,14 +93,6 @@ public class LoginUserDto implements Serializable {
 
     public void setOs(String os) {
         this.os = os;
-    }
-
-    public Set<String> getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(Set<String> permissions) {
-        this.permissions = permissions;
     }
 
     public UserDto getUserDto() {

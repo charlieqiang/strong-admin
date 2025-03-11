@@ -9,16 +9,14 @@ import java.util.Collection;
 import java.util.Set;
 
 /**
- * 登录用户身份权限
- * 
+ * 登录用户
+ *
  * @author charlie
  */
 public class LoginUser implements UserDetails {
     private static final long serialVersionUID = -6923226626448528752L;
 
     private String userId;
-
-    private String deptId;
 
     private String tokenId;
 
@@ -34,26 +32,14 @@ public class LoginUser implements UserDetails {
 
     private String os;
 
-    private Set<String> permissions;
-
     private UserDto userDto;
 
-    public LoginUser()
-    {
+    public LoginUser() {
     }
 
-    public LoginUser(UserDto user, Set<String> permissions)
-    {
+    public LoginUser(UserDto user) {
+        this.userId = user.getId();
         this.userDto = user;
-        this.permissions = permissions;
-    }
-
-    public LoginUser(String userId, String deptId, UserDto user, Set<String> permissions)
-    {
-        this.userId = userId;
-        this.deptId = deptId;
-        this.userDto = user;
-        this.permissions = permissions;
     }
 
     public String getUserId() {
@@ -64,12 +50,8 @@ public class LoginUser implements UserDetails {
         this.userId = userId;
     }
 
-    public String getDeptId() {
-        return deptId;
-    }
-
-    public void setDeptId(String deptId) {
-        this.deptId = deptId;
+    public void setUserDto(UserDto userDto) {
+        this.userDto = userDto;
     }
 
     public String getTokenId() {
@@ -82,14 +64,12 @@ public class LoginUser implements UserDetails {
 
     @JSONField(serialize = false)
     @Override
-    public String getPassword()
-    {
+    public String getPassword() {
         return userDto.getPassword();
     }
 
     @Override
-    public String getUsername()
-    {
+    public String getUsername() {
         return userDto.getUsername();
     }
 
@@ -98,130 +78,101 @@ public class LoginUser implements UserDetails {
      */
     @JSONField(serialize = false)
     @Override
-    public boolean isAccountNonExpired()
-    {
+    public boolean isAccountNonExpired() {
         return true;
     }
 
     /**
      * 指定用户是否解锁,锁定的用户无法进行身份验证
-     * 
+     *
      * @return
      */
     @JSONField(serialize = false)
     @Override
-    public boolean isAccountNonLocked()
-    {
+    public boolean isAccountNonLocked() {
         return true;
     }
 
     /**
      * 指示是否已过期的用户的凭据(密码),过期的凭据防止认证
-     * 
+     *
      * @return
      */
     @JSONField(serialize = false)
     @Override
-    public boolean isCredentialsNonExpired()
-    {
+    public boolean isCredentialsNonExpired() {
         return true;
     }
 
     /**
      * 是否可用 ,禁用的用户不能身份验证
-     * 
+     *
      * @return
      */
     @JSONField(serialize = false)
     @Override
-    public boolean isEnabled()
-    {
+    public boolean isEnabled() {
         return true;
     }
 
-    public Long getLoginTime()
-    {
+    public Long getLoginTime() {
         return loginTime;
     }
 
-    public void setLoginTime(Long loginTime)
-    {
+    public void setLoginTime(Long loginTime) {
         this.loginTime = loginTime;
     }
 
-    public String getIpaddr()
-    {
+    public String getIpaddr() {
         return ipaddr;
     }
 
-    public void setIpaddr(String ipaddr)
-    {
+    public void setIpaddr(String ipaddr) {
         this.ipaddr = ipaddr;
     }
 
-    public String getLoginLocation()
-    {
+    public String getLoginLocation() {
         return loginLocation;
     }
 
-    public void setLoginLocation(String loginLocation)
-    {
+    public void setLoginLocation(String loginLocation) {
         this.loginLocation = loginLocation;
     }
 
-    public String getBrowser()
-    {
+    public String getBrowser() {
         return browser;
     }
 
-    public void setBrowser(String browser)
-    {
+    public void setBrowser(String browser) {
         this.browser = browser;
     }
 
-    public String getOs()
-    {
+    public String getOs() {
         return os;
     }
 
-    public void setOs(String os)
-    {
+    public void setOs(String os) {
         this.os = os;
     }
 
-    public Long getExpireTime()
-    {
+    public Long getExpireTime() {
         return expireTime;
     }
 
-    public void setExpireTime(Long expireTime)
-    {
+    public void setExpireTime(Long expireTime) {
         this.expireTime = expireTime;
     }
 
-    public Set<String> getPermissions()
-    {
-        return permissions;
-    }
-
-    public void setPermissions(Set<String> permissions)
-    {
-        this.permissions = permissions;
-    }
-
-    public UserDto getUserDto()
-    {
+    public UserDto getUserDto() {
         return userDto;
     }
 
-    public void setUser(UserDto user)
-    {
+    public void setUser(UserDto user) {
         this.userDto = user;
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities()
-    {
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
 }
