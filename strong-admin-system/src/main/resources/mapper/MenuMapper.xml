@@ -5,7 +5,7 @@
 <mapper namespace="com.strong.system.mapper.MenuMapper">
 
     <sql id="Base_Column_List">
-        id, name, path, parent_id
+        menu.id as id, menu.name as name, menu.path as path, menu.parent_id as parent_id
     </sql>
 
     <resultMap id="RouteMap" type="com.strong.system.vo.RouteVo">
@@ -22,4 +22,29 @@
     <select id="queryChildrenByParentId" parameterType="String" resultMap="RouteMap">
         SELECT <include refid="Base_Column_List" /> FROM menu where parent_id = #{parentId} order by sort
     </select>
+
+    <select id="queryParentsByRoleId" parameterType="String" resultMap="RouteMap">
+        SELECT <include refid="Base_Column_List" /> FROM menu
+        JOIN role_menu on menu.id = role_menu.menu_id
+        where menu.parent_id is null and role_menu.role_id = #{roleId} order by menu.sort
+    </select>
+
+    <select id="queryChildrenByParentIdAndRoleId" parameterType="String" resultMap="RouteMap">
+        SELECT <include refid="Base_Column_List" /> FROM menu
+        JOIN role_menu on menu.id = role_menu.menu_id
+        where menu.parent_id = #{parentId} and role_menu.role_id = #{roleId} order by menu.sort
+    </select>
+
+    <delete id="deleteRoleMenuByRoleId" parameterType="String">
+        DELETE FROM role_menu WHERE role_id = #{roleId}
+    </delete>
+
+    <insert id="insertByRoleId" parameterType="java.util.List">
+        INSERT INTO role_menu (id, role_id, menu_id)
+        VALUES
+        <foreach collection="roleMenuList" item="item" separator=",">
+            (#{item.id}, #{item.roleId}, #{item.menuId})
+        </foreach>
+    </insert>
+
 </mapper>

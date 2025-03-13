@@ -10,7 +10,6 @@ import java.io.Serializable;
 public class Menu extends BaseEntity implements Serializable {
     private static final long serialVersionUID = -5981348276088754986L;
 
-    private String id;
     private String name;
     private String code;
     private String path;
@@ -18,16 +17,6 @@ public class Menu extends BaseEntity implements Serializable {
     private Integer sort;
     private Integer useStatus;
     private Integer type;
-
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

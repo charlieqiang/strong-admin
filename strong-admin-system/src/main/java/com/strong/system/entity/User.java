@@ -13,7 +13,6 @@ public class User extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 8721930095269144717L;
 
-    private String id;
     private String username;
     private String password;
     private String account;
@@ -22,14 +21,6 @@ public class User extends BaseEntity implements Serializable {
     private String phone;
     private Date hiredDate;
     private Integer useStatus;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;

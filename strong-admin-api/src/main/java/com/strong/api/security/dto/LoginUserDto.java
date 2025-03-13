@@ -3,7 +3,6 @@ package com.strong.api.security.dto;
 import com.strong.api.system.dto.UserDto;
 
 import java.io.Serializable;
-import java.util.Set;
 
 /**
  * @author charlie

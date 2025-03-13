@@ -33,4 +33,11 @@ public interface UserMapper {
      * @return
      */
     List<String> getUserRolesById(String userId);
+
+    /**
+     * 通过角色删除用户角色关系
+     *
+     * @param roleId
+     */
+    void deleteUserRoleByRoleId(String roleId);
 }

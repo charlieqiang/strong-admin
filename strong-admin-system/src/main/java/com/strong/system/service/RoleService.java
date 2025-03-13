@@ -23,4 +23,26 @@ public interface RoleService {
      * @return
      */
     List<RouteVo> queryAllRoutes();
+
+    /**
+     * 更新角色
+     *
+     * @param roleVo
+     */
+    void updateRole(RoleVo roleVo);
+
+    /**
+     * 新增角色
+     *
+     * @param roleVo
+     * @return
+     */
+    RoleVo addRole(RoleVo roleVo);
+
+    /**
+     * 删除角色
+     *
+     * @param roleId
+     */
+    void deleteRole(String roleId);
 }

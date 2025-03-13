@@ -18,4 +18,22 @@
     <select id="queryAllRoles" parameterType="String" resultMap="RoleMap">
         SELECT <include refid="Base_Column_List" /> FROM role
     </select>
+
+    <insert id="insertRole" parameterType="com.strong.system.entity.Role">
+        INSERT INTO role (id, name, code, description)
+        VALUES (#{id}, #{name}, #{code}, #{description})
+    </insert>
+
+    <update id="updateRole" parameterType="com.strong.system.entity.Role">
+        UPDATE role
+        SET name = #{name},
+            code = #{code},
+            description = #{description}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="String">
+        DELETE FROM role WHERE id = #{roleId}
+    </delete>
+
 </mapper>

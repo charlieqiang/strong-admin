@@ -11,21 +11,10 @@ public class Dept extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 3552346244517532581L;
 
-    private String id;
     private String parentId;
     private String name;
     private String leaderUserId;
     private Integer sort;
-
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getParentId() {
         return parentId;
