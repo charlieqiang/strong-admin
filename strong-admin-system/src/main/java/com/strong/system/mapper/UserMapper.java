@@ -1,6 +1,8 @@
 package com.strong.system.mapper;
 
 import com.strong.system.entity.User;
+import com.strong.system.param.UserParam;
+import com.strong.system.vo.UserInfoVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -40,4 +42,12 @@ public interface UserMapper {
      * @param roleId
      */
     void deleteUserRoleByRoleId(String roleId);
+
+    /**
+     * 通过用户参数查询用户分页
+     *
+     * @param userParam
+     * @return
+     */
+    List<User> getUserPage(UserParam userParam);
 }

@@ -28,6 +28,7 @@
         <commons.io.version>2.13.0</commons.io.version>
         <spring-security.version>5.7.12</spring-security.version>
         <spring-framework.version>5.3.39</spring-framework.version>
+        <pagehelper.boot.version>1.4.7</pagehelper.boot.version>
     </properties>
 
     <modules>
@@ -36,6 +37,7 @@
         <module>strong-admin-startup</module>
         <module>strong-admin-common</module>
         <module>strong-admin-api</module>
+        <module>strong-admin-biz</module>
     </modules>
 
     <dependencyManagement>
@@ -98,6 +100,12 @@
                 <groupId>pro.fessional</groupId>
                 <artifactId>kaptcha</artifactId>
                 <version>${kaptcha.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.boot.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

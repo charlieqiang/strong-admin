@@ -1,14 +1,21 @@
 package com.strong.system.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.strong.common.entity.result.PageResult;
 import com.strong.common.exception.CustomizeException;
+import com.strong.common.util.page.PageUtil;
 import com.strong.system.entity.User;
 import com.strong.system.mapper.UserMapper;
+import com.strong.system.param.UserParam;
 import com.strong.system.service.UserService;
 import com.strong.system.vo.UserInfoVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,5 +56,30 @@ public class UserServiceImpl implements UserService {
         List<String> roles = userMapper.getUserRolesById(userId);
         userInfoVo.setRoles(roles);
         return userInfoVo;
+    }
+
+    @Override
+    public PageResult getUserPage(UserParam userParam, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<User> userList = userMapper.getUserPage(userParam);
+        List<UserInfoVo> userInfoVoList = buildUserInfoVoList(userList);
+        PageInfo<User> pageInfo = new PageInfo<>(userList);
+        return PageUtil.getPageResult(pageInfo, userInfoVoList);
+    }
+
+    private List<UserInfoVo> buildUserInfoVoList(List<User> userList) {
+        if (CollectionUtils.isEmpty(userList)) {
+            return null;
+        }
+        List<UserInfoVo> userInfoVoList = new ArrayList<>();
+        for (User user : userList) {
+            UserInfoVo userInfoVo = new UserInfoVo();
+            userInfoVo.setId(user.getId());
+            userInfoVo.setAccount(user.getAccount());
+            userInfoVo.setName(user.getUsername());
+            userInfoVo.setAvatar(user.getAvatar());
+            userInfoVoList.add(userInfoVo);
+        }
+        return userInfoVoList;
     }
 }

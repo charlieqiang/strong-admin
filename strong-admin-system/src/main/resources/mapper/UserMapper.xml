@@ -38,4 +38,16 @@
     <delete id="deleteUserRoleByRoleId" parameterType="String">
         DELETE FROM user_role WHERE role_id = #{roleId}
     </delete>
+
+    <select id="getUserPage" resultMap="UserMap" parameterType="com.strong.system.param.UserParam">
+        SELECT <include refid="Base_Column_List" /> FROM user
+        <where>
+            <if test="account != null and account != ''">
+                and account = #{account}
+            </if>
+            <if test="username != null and username != ''">
+                and username = #{username}
+            </if>
+        </where>
+    </select>
 </mapper>

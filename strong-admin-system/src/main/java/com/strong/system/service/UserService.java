@@ -1,7 +1,9 @@
 package com.strong.system.service;
 
 
+import com.strong.common.entity.result.PageResult;
 import com.strong.system.entity.User;
+import com.strong.system.param.UserParam;
 import com.strong.system.vo.UserInfoVo;
 
 /**
@@ -25,6 +27,21 @@ public interface UserService {
      */
     User getUserByAccount(String account);
 
-
+    /**
+     * 通过UserId查询用户信息
+     *
+     * @param userId
+     * @return
+     */
     UserInfoVo getUserInfoById(String userId);
+
+    /**
+     * 通过参数查询用户分页
+     *
+     * @param userParam
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    PageResult getUserPage(UserParam userParam, Integer pageNum, Integer pageSize);
 }
