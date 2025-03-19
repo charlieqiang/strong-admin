@@ -2,7 +2,6 @@ package com.strong.system.controller;
 
 import com.strong.common.entity.result.Result;
 import com.strong.common.util.snowflakeid.SnowflakeIdWorker;
-import com.strong.system.entity.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

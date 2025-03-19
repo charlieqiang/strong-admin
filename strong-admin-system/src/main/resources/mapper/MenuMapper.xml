@@ -8,28 +8,28 @@
         menu.id as id, menu.name as name, menu.path as path, menu.parent_id as parent_id
     </sql>
 
-    <resultMap id="RouteMap" type="com.strong.system.vo.RouteVo">
+    <resultMap id="MenuMap" type="com.strong.system.entity.Menu">
         <id column="id" property="id"/>
-        <result column="name" property="title"/>
+        <result column="name" property="name"/>
         <result column="path" property="path"/>
         <result column="parent_id" property="parentId"/>
     </resultMap>
 
-    <select id="queryParents" resultMap="RouteMap">
+    <select id="queryParents" resultMap="MenuMap">
         SELECT <include refid="Base_Column_List" /> FROM menu where parent_id is null order by sort
     </select>
 
-    <select id="queryChildrenByParentId" parameterType="String" resultMap="RouteMap">
+    <select id="queryChildrenByParentId" parameterType="String" resultMap="MenuMap">
         SELECT <include refid="Base_Column_List" /> FROM menu where parent_id = #{parentId} order by sort
     </select>
 
-    <select id="queryParentsByRoleId" parameterType="String" resultMap="RouteMap">
+    <select id="queryParentsByRoleId" parameterType="String" resultMap="MenuMap">
         SELECT <include refid="Base_Column_List" /> FROM menu
         JOIN role_menu on menu.id = role_menu.menu_id
         where menu.parent_id is null and role_menu.role_id = #{roleId} order by menu.sort
     </select>
 
-    <select id="queryChildrenByParentIdAndRoleId" parameterType="String" resultMap="RouteMap">
+    <select id="queryChildrenByParentIdAndRoleId" parameterType="String" resultMap="MenuMap">
         SELECT <include refid="Base_Column_List" /> FROM menu
         JOIN role_menu on menu.id = role_menu.menu_id
         where menu.parent_id = #{parentId} and role_menu.role_id = #{roleId} order by menu.sort

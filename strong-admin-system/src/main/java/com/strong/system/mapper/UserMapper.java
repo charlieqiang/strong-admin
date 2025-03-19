@@ -3,7 +3,6 @@ package com.strong.system.mapper;
 import com.strong.system.entity.User;
 import com.strong.system.entity.UserRole;
 import com.strong.system.param.UserParam;
-import com.strong.system.vo.UserInfoVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -32,10 +31,10 @@ public interface UserMapper {
 
     /**
      * 通过userId查询roles
-     * @param userId
+     * @param id
      * @return
      */
-    List<String> getUserRolesById(String userId);
+    List<String> getUserRolesById(String id);
 
     /**
      * 通过角色删除用户角色关系
@@ -47,17 +46,17 @@ public interface UserMapper {
     /**
      * 通过用户参数查询用户分页
      *
-     * @param userParam
+     * @param user
      * @return
      */
-    List<User> getUserPage(UserParam userParam);
+    List<User> getUserPage(User user);
 
     /**
      * 新增用户
      *
-     * @param userParam
+     * @param user
      */
-    void addUser(UserParam userParam);
+    void addUser(User user);
 
     /**
      * 添加用户角色

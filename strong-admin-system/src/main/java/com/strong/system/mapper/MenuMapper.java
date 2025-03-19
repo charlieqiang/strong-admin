@@ -1,7 +1,8 @@
 package com.strong.system.mapper;
 
+import com.strong.system.entity.Menu;
 import com.strong.system.entity.RoleMenu;
-import com.strong.system.vo.RouteVo;
+import com.strong.system.vo.MenuVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public interface MenuMapper {
      *
      * @return
      */
-    List<RouteVo> queryParents();
+    List<Menu> queryParents();
 
     /**
      * 通过父级菜单id查询所有子菜单
@@ -26,7 +27,7 @@ public interface MenuMapper {
      * @param parentId
      * @return
      */
-    List<RouteVo> queryChildrenByParentId(String parentId);
+    List<Menu> queryChildrenByParentId(String parentId);
 
     /**
      * 通过角色id查询父级菜单
@@ -34,7 +35,7 @@ public interface MenuMapper {
      * @param roleId
      * @return
      */
-    List<RouteVo> queryParentsByRoleId(String roleId);
+    List<Menu> queryParentsByRoleId(String roleId);
 
     /**
      * 通过父级菜单id及角色id查询所有子菜单
@@ -43,7 +44,7 @@ public interface MenuMapper {
      * @param roleId
      * @return
      */
-    List<RouteVo> queryChildrenByParentIdAndRoleId(String parentId, String roleId);
+    List<Menu> queryChildrenByParentIdAndRoleId(String parentId, String roleId);
 
     /**
      * 删除角色菜单联系

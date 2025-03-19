@@ -1,6 +1,7 @@
 package com.strong.system.service.impl;
 
 import com.strong.common.util.snowflakeid.SnowflakeIdWorker;
+import com.strong.system.entity.Menu;
 import com.strong.system.entity.Role;
 import com.strong.system.entity.RoleMenu;
 import com.strong.system.mapper.MenuMapper;
@@ -8,7 +9,8 @@ import com.strong.system.mapper.RoleMapper;
 import com.strong.system.mapper.UserMapper;
 import com.strong.system.service.RoleService;
 import com.strong.system.vo.RoleVo;
-import com.strong.system.vo.RouteVo;
+import com.strong.system.vo.MenuVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,48 +39,55 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<RoleVo> queryAllRoles() {
-        List<RoleVo> roleVoList = roleMapper.queryAllRoles();
-        if (CollectionUtils.isEmpty(roleVoList)) {
-            return roleVoList;
+        List<Role> roleList = roleMapper.queryAllRoles();
+        if (CollectionUtils.isEmpty(roleList)) {
+            return new ArrayList<>();
         }
-        for (RoleVo roleVo : roleVoList) {
-            List<RouteVo> parents = menuMapper.queryParentsByRoleId(roleVo.getId());
-            if (CollectionUtils.isEmpty(parents)) {
+
+        List<RoleVo> roleVoList = new ArrayList<>();
+        for (Role role : roleList) {
+            RoleVo roleVo = new RoleVo();
+            BeanUtils.copyProperties(role, roleVo);
+            roleVoList.add(roleVo);
+            List<Menu> parentMenuList = menuMapper.queryParentsByRoleId(role.getId());
+            if (CollectionUtils.isEmpty(parentMenuList)) {
                 roleVo.setRoutes(new ArrayList<>());
                 continue;
             }
-            for (RouteVo routeVo : parents) {
-                setChildrenByRoleId(routeVo, roleVo.getId());
+            List<MenuVo> menuVos = new ArrayList<>();
+            for (Menu parentMenu : parentMenuList) {
+                MenuVo menuVo = new MenuVo();
+                BeanUtils.copyProperties(parentMenu, menuVo);
+                menuVo.setTitle(parentMenu.getName());
+                menuVos.add(menuVo);
             }
-            roleVo.setRoutes(parents);
+            for (MenuVo menuVo : menuVos) {
+                setChildrenByRoleId(menuVo, roleVo.getId());
+            }
+            roleVo.setRoutes(menuVos);
         }
         return roleVoList;
     }
 
-    private void setChildrenByRoleId(RouteVo routeVo, String roleId) {
-        if (routeVo == null) {
+    private void setChildrenByRoleId(MenuVo menuVo, String roleId) {
+        if (menuVo == null) {
             return;
         }
-        List<RouteVo> children = menuMapper.queryChildrenByParentIdAndRoleId(routeVo.getId(), roleId);
-        if (children == null) {
+        List<Menu> menuList = menuMapper.queryChildrenByParentIdAndRoleId(menuVo.getId(), roleId);
+        if (CollectionUtils.isEmpty(menuList)) {
             return;
         }
-        routeVo.setChildren(children);
-        for (RouteVo child : children) {
+        List<MenuVo> children = new ArrayList<>();
+        for (Menu menu : menuList) {
+            MenuVo child = new MenuVo();
+            BeanUtils.copyProperties(menu, child);
+            child.setTitle(menu.getName());
+            children.add(child);
+        }
+        menuVo.setChildren(children);
+        for (MenuVo child : children) {
             setChildrenByRoleId(child, roleId);
         }
-    }
-
-    @Override
-    public List<RouteVo> queryAllRoutes() {
-        List<RouteVo> parents = menuMapper.queryParents();
-        if (CollectionUtils.isEmpty(parents)) {
-            return parents;
-        }
-        for (RouteVo routeVo : parents) {
-            setChildren(routeVo);
-        }
-        return parents;
     }
 
     @Override
@@ -87,7 +96,7 @@ public class RoleServiceImpl implements RoleService {
         Role role = new Role();
         role.setId(roleVo.getId());
         role.setName(roleVo.getName());
-        role.setCode(roleVo.getKey());
+        role.setCode(roleVo.getCode());
         role.setDescription(roleVo.getDescription());
         roleMapper.updateRole(role);
         menuMapper.deleteRoleMenuByRoleId(roleVo.getId());
@@ -100,7 +109,7 @@ public class RoleServiceImpl implements RoleService {
         Role role = new Role();
         role.setId(String.valueOf(SnowflakeIdWorker.getInstance().nextId()));
         role.setName(roleVo.getName());
-        role.setCode(roleVo.getKey());
+        role.setCode(roleVo.getCode());
         role.setDescription(roleVo.getDescription());
         roleMapper.insertRole(role);
         roleVo.setId(role.getId());
@@ -127,11 +136,11 @@ public class RoleServiceImpl implements RoleService {
         menuMapper.insertByRoleId(roleId, roleMenuList);
     }
 
-    private static List<String> getAllRouteIds(List<RouteVo> routes) {
-        if (CollectionUtils.isEmpty(routes)) {
+    private List<String> getAllRouteIds(List<MenuVo> menuVos) {
+        if (CollectionUtils.isEmpty(menuVos)) {
             return new ArrayList<>();
         }
-        return routes.stream()
+        return menuVos.stream()
                 .flatMap(route -> Stream.concat(
                         Stream.of(route.getId()),
                         getAllRouteIds(route.getChildren()).stream()
@@ -145,19 +154,5 @@ public class RoleServiceImpl implements RoleService {
         userMapper.deleteUserRoleByRoleId(roleId);
         roleMapper.deleteById(roleId);
         menuMapper.deleteRoleMenuByRoleId(roleId);
-    }
-
-    private void setChildren(RouteVo routeVo) {
-        if (routeVo == null) {
-            return;
-        }
-        List<RouteVo> children = menuMapper.queryChildrenByParentId(routeVo.getId());
-        if (children == null) {
-            return;
-        }
-        routeVo.setChildren(children);
-        for (RouteVo child : children) {
-            setChildren(child);
-        }
     }
 }

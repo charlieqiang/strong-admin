@@ -12,8 +12,9 @@ import com.strong.system.entity.UserRole;
 import com.strong.system.mapper.UserMapper;
 import com.strong.system.param.UserParam;
 import com.strong.system.service.UserService;
-import com.strong.system.vo.UserInfoVo;
+import com.strong.system.vo.UserVo;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,11 +37,17 @@ public class UserServiceImpl implements UserService {
     private ApiSecurityService apiSecurityService;
 
     @Override
-    public User getUserById(String id) {
+    public UserVo getUserById(String id) {
         if (StringUtils.isBlank(id)) {
             return null;
         }
-        return userMapper.getUserById(id);
+        User user = userMapper.getUserById(id);
+        if (user == null) {
+            return null;
+        }
+        UserVo userVo = new UserVo();
+        BeanUtils.copyProperties(user, userVo);
+        return userVo;
     }
 
     @Override
@@ -52,34 +59,35 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserInfoVo getUserInfoById(String userId) {
+    public UserVo getUserInfoById(String userId) {
         if (StringUtils.isBlank(userId)) {
             throw new CustomizeException("用户获取失败：userId缺失");
         }
-        User user = getUserById(userId);
-        UserInfoVo userInfoVo = new UserInfoVo();
-        userInfoVo.setName(user.getUsername());
-        userInfoVo.setAvatar(user.getAvatar());
+        UserVo user = getUserById(userId);
         List<String> roles = userMapper.getUserRolesById(userId);
-        userInfoVo.setRoles(roles);
-        return userInfoVo;
+        user.setRoles(roles);
+        return user;
     }
 
     @Override
     public PageResult getUserPage(UserParam userParam, Integer pageNum, Integer pageSize) {
+        User user = new User();
+        BeanUtils.copyProperties(userParam, user);
         PageHelper.startPage(pageNum, pageSize);
-        List<User> userList = userMapper.getUserPage(userParam);
-        List<UserInfoVo> userInfoVoList = buildUserInfoVoList(userList);
+        List<User> userList = userMapper.getUserPage(user);
+        List<UserVo> userInfoVoList = buildUserInfoVoList(userList);
         PageInfo<User> pageInfo = new PageInfo<>(userList);
         return PageUtil.getPageResult(pageInfo, userInfoVoList);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public UserInfoVo addUser(UserParam userParam) {
-        userParam.setId(String.valueOf(SnowflakeIdWorker.getInstance().nextId()));
-        userParam.setPassword(apiSecurityService.encryptPassword(userParam.getPassword()));
-        userMapper.addUser(userParam);
+    public UserVo addUser(UserParam userParam) {
+        User user = new User();
+        BeanUtils.copyProperties(userParam, user);
+        user.setId(String.valueOf(SnowflakeIdWorker.getInstance().nextId()));
+        user.setPassword(apiSecurityService.encryptPassword(userParam.getPassword()));
+        userMapper.addUser(user);
 
         List<UserRole> userRoleList = new ArrayList<>();
         for (String roleId : userParam.getRoleIdList()) {
@@ -93,23 +101,23 @@ public class UserServiceImpl implements UserService {
             userMapper.addUserRoleBatch(userRoleList);
         }
 
-        User user = getUserByAccount(userParam.getAccount());
-        UserInfoVo userInfoVo = new UserInfoVo();
-        userInfoVo.setName(user.getUsername());
+        user = getUserByAccount(userParam.getAccount());
+        UserVo userInfoVo = new UserVo();
+        userInfoVo.setUsername(user.getUsername());
         userInfoVo.setAccount(user.getAccount());
         return userInfoVo;
     }
 
-    private List<UserInfoVo> buildUserInfoVoList(List<User> userList) {
+    private List<UserVo> buildUserInfoVoList(List<User> userList) {
         if (CollectionUtils.isEmpty(userList)) {
             return null;
         }
-        List<UserInfoVo> userInfoVoList = new ArrayList<>();
+        List<UserVo> userInfoVoList = new ArrayList<>();
         for (User user : userList) {
-            UserInfoVo userInfoVo = new UserInfoVo();
+            UserVo userInfoVo = new UserVo();
             userInfoVo.setId(user.getId());
             userInfoVo.setAccount(user.getAccount());
-            userInfoVo.setName(user.getUsername());
+            userInfoVo.setUsername(user.getUsername());
             userInfoVo.setAvatar(user.getAvatar());
             userInfoVoList.add(userInfoVo);
         }

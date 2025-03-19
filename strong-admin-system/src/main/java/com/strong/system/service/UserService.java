@@ -4,7 +4,7 @@ package com.strong.system.service;
 import com.strong.common.entity.result.PageResult;
 import com.strong.system.entity.User;
 import com.strong.system.param.UserParam;
-import com.strong.system.vo.UserInfoVo;
+import com.strong.system.vo.UserVo;
 
 /**
  * @author charlie
@@ -17,7 +17,7 @@ public interface UserService {
      * @param id
      * @return
      */
-    User getUserById(String id);
+    UserVo getUserById(String id);
 
     /**
      * 通过account查询用户
@@ -33,7 +33,7 @@ public interface UserService {
      * @param userId
      * @return
      */
-    UserInfoVo getUserInfoById(String userId);
+    UserVo getUserInfoById(String userId);
 
     /**
      * 通过参数查询用户分页
@@ -51,5 +51,5 @@ public interface UserService {
      * @param userParam
      * @return
      */
-    UserInfoVo addUser(UserParam userParam);
+    UserVo addUser(UserParam userParam);
 }

@@ -10,20 +10,20 @@ import java.util.List;
  * @author charlie
  * @date 2025/2/26 15:52
  **/
-public class UserInfoVo extends BaseEntity implements Serializable {
+public class UserVo extends BaseEntity implements Serializable {
     private static final long serialVersionUID = -4034159858853752403L;
 
-    private List<String> roles;
     private String account;
+    private String username;
     private String avatar;
-    private String name;
+    private List<String> roles;
 
-    public UserInfoVo() {
+    public UserVo() {
     }
 
-    public UserInfoVo(UserDto user) {
+    public UserVo(UserDto user) {
         this.avatar = user.getAvatar();
-        this.name = user.getUsername();
+        this.username = user.getUsername();
     }
 
     public String getAccount() {
@@ -50,11 +50,11 @@ public class UserInfoVo extends BaseEntity implements Serializable {
         this.avatar = avatar;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

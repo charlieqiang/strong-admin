@@ -7,14 +7,14 @@ import java.util.List;
  * @author charlie
  * @date 2025/3/11 13:20
  **/
-public class RouteVo implements Serializable {
+public class MenuVo implements Serializable {
     private static final long serialVersionUID = -7005586503657704252L;
 
     private String id;
     private String path;
     private String title;
     private String parentId;
-    private List<RouteVo> children;
+    private List<MenuVo> children;
 
     public String getParentId() {
         return parentId;
@@ -48,11 +48,11 @@ public class RouteVo implements Serializable {
         this.title = title;
     }
 
-    public List<RouteVo> getChildren() {
+    public List<MenuVo> getChildren() {
         return children;
     }
 
-    public void setChildren(List<RouteVo> children) {
+    public void setChildren(List<MenuVo> children) {
         this.children = children;
     }
 }

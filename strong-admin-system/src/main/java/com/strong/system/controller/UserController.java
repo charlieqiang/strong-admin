@@ -8,14 +8,13 @@ import com.strong.common.exception.CustomizeException;
 import com.strong.system.entity.User;
 import com.strong.system.param.UserParam;
 import com.strong.system.service.UserService;
-import com.strong.system.vo.UserInfoVo;
+import com.strong.system.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -33,24 +32,24 @@ public class UserController {
     private ApiSecurityService apiSecurityService;
 
     @GetMapping("/{id}")
-    public Result<User> getUserById(@PathVariable String id) {
-        User user = userService.getUserById(id);
+    public Result<UserVo> getUserById(@PathVariable String id) {
+        UserVo user = userService.getUserById(id);
         return Result.success(user);
     }
 
     @PostMapping("")
-    public Result<UserInfoVo> addUser(@RequestBody UserParam userParam) {
-        UserInfoVo user = userService.addUser(userParam);
+    public Result<UserVo> addUser(@RequestBody UserParam userParam) {
+        UserVo user = userService.addUser(userParam);
         return Result.success(user);
     }
 
     @GetMapping("/info")
-    public Result<UserInfoVo> getUserInfo() {
+    public Result<UserVo> getUserInfo() {
         LoginUserDto loginUser = apiSecurityService.getLoginUser();
         if (loginUser == null) {
             throw new CustomizeException("查无用户信息");
         }
-        UserInfoVo userInfoVo = userService.getUserInfoById(loginUser.getUserId());
+        UserVo userInfoVo = userService.getUserInfoById(loginUser.getUserId());
         return Result.success(userInfoVo);
     }
 

@@ -39,7 +39,7 @@
         DELETE FROM user_role WHERE role_id = #{roleId}
     </delete>
 
-    <select id="getUserPage" resultMap="UserMap" parameterType="com.strong.system.param.UserParam">
+    <select id="getUserPage" resultMap="UserMap" parameterType="com.strong.system.entity.User">
         SELECT <include refid="Base_Column_List" /> FROM user
         <where>
             <if test="account != null and account != ''">
@@ -51,7 +51,7 @@
         </where>
     </select>
 
-    <insert id="addUser" parameterType="com.strong.system.param.UserParam">
+    <insert id="addUser" parameterType="com.strong.system.entity.User">
         INSERT INTO user (id, username, password, account)
         VALUES (#{id}, #{username}, #{password}, #{account})
     </insert>

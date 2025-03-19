@@ -32,7 +32,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
         UserDto user = apiUserService.getUserByAccount(account);
         if (null == user) {
-            log.info("登录用户：{} 不存在.", account);
+            log.info("登录用户：{} 不存在", account);
             throw new CustomizeException();
         }
 

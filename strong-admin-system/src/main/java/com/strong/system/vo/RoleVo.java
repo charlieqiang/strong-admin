@@ -11,10 +11,10 @@ public class RoleVo implements Serializable {
     private static final long serialVersionUID = -1896742746858966378L;
 
     private String id;
-    private String key;
+    private String code;
     private String name;
     private String description;
-    private List<RouteVo> routes;
+    private List<MenuVo> routes;
 
     public String getId() {
         return id;
@@ -24,12 +24,12 @@ public class RoleVo implements Serializable {
         this.id = id;
     }
 
-    public String getKey() {
-        return key;
+    public String getCode() {
+        return code;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {
@@ -48,11 +48,11 @@ public class RoleVo implements Serializable {
         this.description = description;
     }
 
-    public List<RouteVo> getRoutes() {
+    public List<MenuVo> getRoutes() {
         return routes;
     }
 
-    public void setRoutes(List<RouteVo> routes) {
+    public void setRoutes(List<MenuVo> routes) {
         this.routes = routes;
     }
 }

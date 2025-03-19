@@ -18,7 +18,7 @@ public interface RoleMapper {
      *
      * @return
      */
-    List<RoleVo> queryAllRoles();
+    List<Role> queryAllRoles();
 
     /**
      * 新增角色

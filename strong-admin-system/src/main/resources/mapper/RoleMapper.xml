@@ -8,10 +8,10 @@
         id, name, code, description
     </sql>
 
-    <resultMap id="RoleMap" type="com.strong.system.vo.RoleVo">
+    <resultMap id="RoleMap" type="com.strong.system.entity.Role">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
-        <result column="code" property="key"/>
+        <result column="code" property="code"/>
         <result column="description" property="description"/>
     </resultMap>
 
