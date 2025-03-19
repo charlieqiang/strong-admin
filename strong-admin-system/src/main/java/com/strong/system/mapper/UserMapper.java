@@ -1,6 +1,7 @@
 package com.strong.system.mapper;
 
 import com.strong.system.entity.User;
+import com.strong.system.entity.UserRole;
 import com.strong.system.param.UserParam;
 import com.strong.system.vo.UserInfoVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -50,4 +51,18 @@ public interface UserMapper {
      * @return
      */
     List<User> getUserPage(UserParam userParam);
+
+    /**
+     * 新增用户
+     *
+     * @param userParam
+     */
+    void addUser(UserParam userParam);
+
+    /**
+     * 添加用户角色
+     *
+     * @param userRoleList
+     */
+    void addUserRoleBatch(List<UserRole> userRoleList);
 }

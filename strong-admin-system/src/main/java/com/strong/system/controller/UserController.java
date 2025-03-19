@@ -38,6 +38,12 @@ public class UserController {
         return Result.success(user);
     }
 
+    @PostMapping("")
+    public Result<UserInfoVo> addUser(@RequestBody UserParam userParam) {
+        UserInfoVo user = userService.addUser(userParam);
+        return Result.success(user);
+    }
+
     @GetMapping("/info")
     public Result<UserInfoVo> getUserInfo() {
         LoginUserDto loginUser = apiSecurityService.getLoginUser();

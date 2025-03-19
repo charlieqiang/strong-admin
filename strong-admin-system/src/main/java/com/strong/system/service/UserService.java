@@ -44,4 +44,12 @@ public interface UserService {
      * @return
      */
     PageResult getUserPage(UserParam userParam, Integer pageNum, Integer pageSize);
+
+    /**
+     * 添加用户
+     *
+     * @param userParam
+     * @return
+     */
+    UserInfoVo addUser(UserParam userParam);
 }

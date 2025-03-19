@@ -50,4 +50,17 @@
             </if>
         </where>
     </select>
+
+    <insert id="addUser" parameterType="com.strong.system.param.UserParam">
+        INSERT INTO user (id, username, password, account)
+        VALUES (#{id}, #{username}, #{password}, #{account})
+    </insert>
+
+    <insert id="addUserRoleBatch" parameterType="java.util.List">
+        INSERT INTO user_role (id, user_id, role_id)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id}, #{item.userId}, #{item.roleId})
+        </foreach>
+    </insert>
 </mapper>

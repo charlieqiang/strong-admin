@@ -4,10 +4,10 @@ import com.strong.api.security.dto.LoginUserDto;
 import com.strong.api.security.service.ApiSecurityService;
 import com.strong.common.exception.CustomizeException;
 import com.strong.security.entity.LoginUser;
+import com.strong.security.utils.SecurityUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
 
 /**
  * @author charlie
@@ -18,7 +18,7 @@ public class ApiSecurityServiceImpl implements ApiSecurityService {
     @Override
     public LoginUserDto getLoginUser() {
         try {
-            LoginUser loginUser = (LoginUser) getAuthentication().getPrincipal();
+            LoginUser loginUser = (LoginUser) SecurityUtils.getAuthentication().getPrincipal();
             if (loginUser == null) {
                 return null;
             }
@@ -30,10 +30,8 @@ public class ApiSecurityServiceImpl implements ApiSecurityService {
         }
     }
 
-    /**
-     * 获取Authentication
-     */
-    public static Authentication getAuthentication() {
-        return SecurityContextHolder.getContext().getAuthentication();
+    @Override
+    public String encryptPassword(String password) {
+        return SecurityUtils.encryptPassword(password);
     }
 }

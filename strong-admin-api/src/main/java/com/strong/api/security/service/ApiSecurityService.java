@@ -13,4 +13,12 @@ public interface ApiSecurityService {
      * @return
      */
     LoginUserDto getLoginUser();
+
+    /**
+     * 密码加密
+     *
+     * @param password
+     * @return
+     */
+    String encryptPassword(String password);
 }
