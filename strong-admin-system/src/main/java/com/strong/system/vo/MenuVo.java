@@ -12,9 +12,18 @@ public class MenuVo implements Serializable {
 
     private String id;
     private String path;
+    private Integer sort;
     private String title;
     private String parentId;
     private List<MenuVo> children;
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
 
     public String getParentId() {
         return parentId;
