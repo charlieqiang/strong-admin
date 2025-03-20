@@ -63,4 +63,12 @@
             (#{item.id}, #{item.userId}, #{item.roleId})
         </foreach>
     </insert>
+
+    <delete id="deleteUserById" parameterType="String">
+        DELETE FROM user WHERE id = #{userId}
+    </delete>
+
+    <delete id="deleteUserRoleByUserId" parameterType="String">
+        DELETE FROM user_role WHERE user_id = #{userId}
+    </delete>
 </mapper>

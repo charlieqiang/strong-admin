@@ -64,4 +64,18 @@ public interface UserMapper {
      * @param userRoleList
      */
     void addUserRoleBatch(List<UserRole> userRoleList);
+
+    /**
+     * 删除用户
+     *
+     * @param id
+     */
+    void deleteUserById(String id);
+
+    /**
+     * 删除用户角色关联关系
+     *
+     * @param userId
+     */
+    void deleteUserRoleByUserId(String userId);
 }

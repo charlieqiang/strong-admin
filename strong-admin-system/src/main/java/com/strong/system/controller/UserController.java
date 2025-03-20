@@ -5,11 +5,11 @@ import com.strong.api.security.service.ApiSecurityService;
 import com.strong.common.entity.result.PageResult;
 import com.strong.common.entity.result.Result;
 import com.strong.common.exception.CustomizeException;
-import com.strong.system.entity.User;
 import com.strong.system.param.UserParam;
 import com.strong.system.service.UserService;
 import com.strong.system.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,5 +59,11 @@ public class UserController {
                                         @PathVariable("pageSize") Integer pageSize) {
         PageResult userPage = userService.getUserPage(userParam, pageNum, pageSize);
         return Result.success(userPage);
+    }
+
+    @DeleteMapping("/{id}")
+    public Result deleteUser(@PathVariable String id) {
+        userService.deleteUser(id);
+        return Result.success();
     }
 }

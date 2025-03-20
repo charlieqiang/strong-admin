@@ -123,4 +123,14 @@ public class UserServiceImpl implements UserService {
         }
         return userInfoVoList;
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteUser(String id) {
+        if (StringUtils.isBlank(id)) {
+            throw new CustomizeException("删除用户失败：id缺失");
+        }
+        userMapper.deleteUserById(id);
+        userMapper.deleteUserRoleByUserId(id);
+    }
 }

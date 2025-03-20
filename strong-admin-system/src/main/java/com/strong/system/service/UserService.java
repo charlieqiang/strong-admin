@@ -52,4 +52,11 @@ public interface UserService {
      * @return
      */
     UserVo addUser(UserParam userParam);
+
+    /**
+     * 删除用户
+     *
+     * @param id
+     */
+    void deleteUser(String id);
 }
