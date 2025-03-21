@@ -2,7 +2,6 @@ package com.strong.system.mapper;
 
 import com.strong.system.entity.Menu;
 import com.strong.system.entity.RoleMenu;
-import com.strong.system.vo.MenuVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -13,6 +12,13 @@ import java.util.List;
  **/
 @Mapper
 public interface MenuMapper {
+
+    /**
+     * 更新菜单信息
+     *
+     * @param menu 菜单信息
+     */
+    void updateMenu(Menu menu);
 
     /**
      * 查询所有父级菜单

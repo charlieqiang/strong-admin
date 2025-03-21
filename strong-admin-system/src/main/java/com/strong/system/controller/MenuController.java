@@ -5,9 +5,12 @@ import com.strong.system.service.MenuService;
 import com.strong.system.vo.MenuVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,8 +25,20 @@ public class MenuController {
     private MenuService menuService;
 
     @GetMapping("/list")
-    public Result<List<MenuVo>> getRoutes() {
+    public Result<List<MenuVo>> queryAllMenuList() {
         List<MenuVo> routeVoList = menuService.queryAllMenuList();
         return Result.success(routeVoList);
+    }
+
+    @PutMapping("/list")
+    public Result updateMenuList(@RequestBody List<MenuVo> menuVoList) {
+        menuService.updateMenuList(menuVoList);
+        return Result.success();
+    }
+
+    @PutMapping("")
+    public Result updateMenu(@RequestBody MenuVo menuVo) {
+        menuService.updateMenuList(Collections.singletonList(menuVo));
+        return Result.success();
     }
 }

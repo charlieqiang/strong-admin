@@ -48,4 +48,15 @@
         </foreach>
     </insert>
 
+    <update id="updateMenu" parameterType="com.strong.system.entity.Menu">
+        update menu
+        set name = #{name},
+            code = #{code},
+            path = #{path},
+            parent_id = #{parentId},
+            sort = #{sort},
+            update_time = now()
+        where id = #{id}
+    </update>
+
 </mapper>

@@ -1,7 +1,6 @@
 package com.strong.system.mapper;
 
 import com.strong.system.entity.Role;
-import com.strong.system.vo.RoleVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

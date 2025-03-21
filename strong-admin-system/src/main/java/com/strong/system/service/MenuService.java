@@ -16,4 +16,11 @@ public interface MenuService {
      * @return
      */
     List<MenuVo> queryAllMenuList();
+
+    /**
+     * 批量更新菜单
+     *
+     * @param menuVoList
+     */
+    void updateMenuList(List<MenuVo> menuVoList);
 }

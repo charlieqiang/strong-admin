@@ -2,7 +2,6 @@ package com.strong.system.mapper;
 
 import com.strong.system.entity.User;
 import com.strong.system.entity.UserRole;
-import com.strong.system.param.UserParam;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

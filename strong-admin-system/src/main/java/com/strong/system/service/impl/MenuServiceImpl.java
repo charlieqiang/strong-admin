@@ -61,4 +61,31 @@ public class MenuServiceImpl implements MenuService {
             setChildren(child);
         }
     }
+    
+    @Override
+    public void updateMenuList(List<MenuVo> menuVoList) {
+        if (CollectionUtils.isEmpty(menuVoList)) {
+            return;
+        }
+        for (MenuVo menuVo : menuVoList) {
+            updateMenu(menuVo);
+        }
+    }
+
+    private void updateMenu(MenuVo menuVo) {
+        if (menuVo == null) {
+            return;
+        }
+        Menu menu = new Menu();
+        BeanUtils.copyProperties(menuVo, menu);
+        menu.setName(menuVo.getTitle());
+        menuMapper.updateMenu(menu);
+        
+        List<MenuVo> children = menuVo.getChildren();
+        if (!CollectionUtils.isEmpty(children)) {
+            for (MenuVo child : children) {
+                updateMenu(child);
+            }
+        }
+    }
 }
