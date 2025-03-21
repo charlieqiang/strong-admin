@@ -51,12 +51,15 @@
     <update id="updateMenu" parameterType="com.strong.system.entity.Menu">
         update menu
         set name = #{name},
-            code = #{code},
             path = #{path},
             parent_id = #{parentId},
-            sort = #{sort},
-            update_time = now()
+            sort = #{sort}
         where id = #{id}
     </update>
+
+    <insert id="insertMenu" parameterType="com.strong.system.entity.Menu">
+        insert into menu (id, name, path, parent_id, sort)
+        values (#{id}, #{name}, #{path}, #{parentId}, #{sort})
+    </insert>
 
 </mapper>

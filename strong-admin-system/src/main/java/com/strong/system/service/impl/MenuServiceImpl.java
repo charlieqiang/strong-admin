@@ -1,5 +1,6 @@
 package com.strong.system.service.impl;
 
+import com.strong.common.util.snowflakeid.SnowflakeIdWorker;
 import com.strong.system.entity.Menu;
 import com.strong.system.mapper.MenuMapper;
 import com.strong.system.service.MenuService;
@@ -87,5 +88,17 @@ public class MenuServiceImpl implements MenuService {
                 updateMenu(child);
             }
         }
+    }
+    
+    @Override
+    public void addMenu(MenuVo menuVo) {
+        if (menuVo == null) {
+            return;
+        }
+        Menu menu = new Menu();
+        BeanUtils.copyProperties(menuVo, menu);
+        menu.setId(String.valueOf(SnowflakeIdWorker.getInstance().nextId()));
+        menu.setName(menuVo.getTitle());
+        menuMapper.insertMenu(menu);
     }
 }

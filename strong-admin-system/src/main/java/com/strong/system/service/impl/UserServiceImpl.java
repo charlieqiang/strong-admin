@@ -12,6 +12,7 @@ import com.strong.system.entity.UserRole;
 import com.strong.system.mapper.UserMapper;
 import com.strong.system.param.UserParam;
 import com.strong.system.service.UserService;
+import com.strong.system.vo.UserRoleVo;
 import com.strong.system.vo.UserVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -21,7 +22,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author charlie
@@ -82,7 +86,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public UserVo addUser(UserParam userParam) {
+    public void addUser(UserParam userParam) {
         User user = new User();
         BeanUtils.copyProperties(userParam, user);
         user.setId(String.valueOf(SnowflakeIdWorker.getInstance().nextId()));
@@ -93,19 +97,13 @@ public class UserServiceImpl implements UserService {
         for (String roleId : userParam.getRoleIdList()) {
             UserRole userRole = new UserRole();
             userRole.setId(String.valueOf(SnowflakeIdWorker.getInstance().nextId()));
-            userRole.setUserId(userParam.getId());
+            userRole.setUserId(user.getId());
             userRole.setRoleId(roleId);
             userRoleList.add(userRole);
         }
         if (!CollectionUtils.isEmpty(userRoleList)) {
             userMapper.addUserRoleBatch(userRoleList);
         }
-
-        user = getUserByAccount(userParam.getAccount());
-        UserVo userInfoVo = new UserVo();
-        userInfoVo.setUsername(user.getUsername());
-        userInfoVo.setAccount(user.getAccount());
-        return userInfoVo;
     }
 
     private List<UserVo> buildUserInfoVoList(List<User> userList) {
@@ -113,12 +111,22 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         List<UserVo> userInfoVoList = new ArrayList<>();
+        List<String> userIdList = userList.stream().map(User::getId).collect(Collectors.toList());
+        List<UserRoleVo> userRoleList = userMapper.getUserRolesByUserIdList(userIdList);
+        Map<String, List<UserRoleVo>> userRolesMap = new HashMap<>();
+        if (!CollectionUtils.isEmpty(userRoleList)) {
+            userRolesMap = userRoleList.stream().collect(Collectors.groupingBy(UserRoleVo::getUserId));
+        }
         for (User user : userList) {
             UserVo userInfoVo = new UserVo();
             userInfoVo.setId(user.getId());
             userInfoVo.setAccount(user.getAccount());
             userInfoVo.setUsername(user.getUsername());
             userInfoVo.setAvatar(user.getAvatar());
+            if (userRolesMap.containsKey(user.getId())) {
+                List<UserRoleVo> userRoleVos = userRolesMap.get(user.getId());
+                userInfoVo.setRoles(userRoleVos.stream().map(UserRoleVo::getRoleCode).collect(Collectors.toList()));
+            }
             userInfoVoList.add(userInfoVo);
         }
         return userInfoVoList;
@@ -132,5 +140,32 @@ public class UserServiceImpl implements UserService {
         }
         userMapper.deleteUserById(id);
         userMapper.deleteUserRoleByUserId(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateUser(UserParam userParam) {
+        if (StringUtils.isBlank(userParam.getId())) {
+            throw new CustomizeException("更新用户失败：id缺失");
+        }
+        User user = new User();
+        BeanUtils.copyProperties(userParam, user);
+        if (StringUtils.isNotBlank(userParam.getPassword())) {
+            user.setPassword(apiSecurityService.encryptPassword(userParam.getPassword()));
+        }
+        userMapper.updateUser(user);
+
+        if (!CollectionUtils.isEmpty(userParam.getRoleIdList())) {
+            userMapper.deleteUserRoleByUserId(userParam.getId());
+            List<UserRole> userRoleList = new ArrayList<>();
+            for (String roleId : userParam.getRoleIdList()) {
+                UserRole userRole = new UserRole();
+                userRole.setId(String.valueOf(SnowflakeIdWorker.getInstance().nextId()));
+                userRole.setUserId(userParam.getId());
+                userRole.setRoleId(roleId);
+                userRoleList.add(userRole);
+            }
+            userMapper.addUserRoleBatch(userRoleList);
+        }
     }
 }

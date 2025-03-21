@@ -36,6 +36,13 @@ public interface MenuMapper {
     List<Menu> queryChildrenByParentId(String parentId);
 
     /**
+     * 插入菜单
+     *
+     * @param menu 菜单信息
+     */
+    void insertMenu(Menu menu);
+
+    /**
      * 通过角色id查询父级菜单
      *
      * @param roleId

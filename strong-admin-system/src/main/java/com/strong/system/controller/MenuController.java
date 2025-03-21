@@ -5,6 +5,7 @@ import com.strong.system.service.MenuService;
 import com.strong.system.vo.MenuVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,12 @@ public class MenuController {
     @PutMapping("")
     public Result updateMenu(@RequestBody MenuVo menuVo) {
         menuService.updateMenuList(Collections.singletonList(menuVo));
+        return Result.success();
+    }
+
+    @PostMapping("")
+    public Result addMenu(@RequestBody MenuVo menuVo) {
+        menuService.addMenu(menuVo);
         return Result.success();
     }
 }

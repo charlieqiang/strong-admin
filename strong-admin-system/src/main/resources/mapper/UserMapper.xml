@@ -39,6 +39,19 @@
         DELETE FROM user_role WHERE role_id = #{roleId}
     </delete>
 
+    <select id="getUserRolesByUserIdList" parameterType="java.util.List" resultType="com.strong.system.vo.UserRoleVo">
+        SELECT
+        u.id AS userId,
+        r.code AS roleCode
+        FROM user u
+        LEFT JOIN user_role ur ON u.id = ur.user_id
+        LEFT JOIN role r ON ur.role_id = r.id
+        WHERE u.id IN
+        <foreach collection="list" item="userId" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </select>
+
     <select id="getUserPage" resultMap="UserMap" parameterType="com.strong.system.entity.User">
         SELECT <include refid="Base_Column_List" /> FROM user
         <where>
@@ -71,4 +84,35 @@
     <delete id="deleteUserRoleByUserId" parameterType="String">
         DELETE FROM user_role WHERE user_id = #{userId}
     </delete>
+
+    <update id="updateUser" parameterType="com.strong.system.entity.User">
+        UPDATE user
+        <set>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="account != null and account != ''">
+                account = #{account},
+            </if>
+            <if test="avatar != null and avatar != ''">
+                avatar = #{avatar},
+            </if>
+            <if test="deptId != null and deptId != ''">
+                dept_id = #{deptId},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="hiredDate != null">
+                hired_date = #{hiredDate},
+            </if>
+            <if test="useStatus != null">
+                use_status = #{useStatus},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
 </mapper>

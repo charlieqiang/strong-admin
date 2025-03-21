@@ -23,4 +23,11 @@ public interface MenuService {
      * @param menuVoList
      */
     void updateMenuList(List<MenuVo> menuVoList);
+
+    /**
+     * 新增菜单
+     *
+     * @param menuVo
+     */
+    void addMenu(MenuVo menuVo);
 }

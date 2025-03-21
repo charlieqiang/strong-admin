@@ -2,9 +2,12 @@ package com.strong.system.mapper;
 
 import com.strong.system.entity.User;
 import com.strong.system.entity.UserRole;
+import com.strong.system.vo.UserRoleVo;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author charlie
@@ -34,6 +37,14 @@ public interface UserMapper {
      * @return
      */
     List<String> getUserRolesById(String id);
+
+    /**
+     * 批量查询用户角色
+     *
+     * @param userIdList 用户ID列表
+     * @return Map<用户ID, 角色列表>
+     */
+    List<UserRoleVo> getUserRolesByUserIdList(List<String> userIdList);
 
     /**
      * 通过角色删除用户角色关系
@@ -77,4 +88,11 @@ public interface UserMapper {
      * @param userId
      */
     void deleteUserRoleByUserId(String userId);
+
+    /**
+     * 更新用户
+     *
+     * @param user
+     */
+    void updateUser(User user);
 }

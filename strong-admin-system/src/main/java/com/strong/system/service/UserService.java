@@ -49,9 +49,8 @@ public interface UserService {
      * 添加用户
      *
      * @param userParam
-     * @return
      */
-    UserVo addUser(UserParam userParam);
+    void addUser(UserParam userParam);
 
     /**
      * 删除用户
@@ -59,4 +58,11 @@ public interface UserService {
      * @param id
      */
     void deleteUser(String id);
+
+    /**
+     * 更新用户
+     *
+     * @param userParam
+     */
+    void updateUser(UserParam userParam);
 }
