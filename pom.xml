@@ -29,6 +29,9 @@
         <spring-security.version>5.7.12</spring-security.version>
         <spring-framework.version>5.3.39</spring-framework.version>
         <pagehelper.boot.version>1.4.7</pagehelper.boot.version>
+        <aliyun.oss.version>3.17.2</aliyun.oss.version>
+        <google.guava.version>31.1-jre</google.guava.version>
+        <hutool.core.version>5.8.27</hutool.core.version>
     </properties>
 
     <modules>
@@ -106,6 +109,24 @@
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
                 <version>${pagehelper.boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${aliyun.oss.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${google.guava.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-core</artifactId>
+                <version>${hutool.core.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
