@@ -1,4 +1,4 @@
-package com.strong.system.component.file.oss;
+package com.strong.common.file.oss.aliyun;
 
 import com.aliyun.oss.OSSClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -9,20 +9,20 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @ConditionalOnClass(OSSClient.class)
-public class FileOssClient extends OssGenerator {
+public class AliyunFileOssClient extends AliyunOssGenerator {
 
     private String assertHost;
     private String baseFolder;
 
-    public FileOssClient(OssProperties ossProperties) {
+    public AliyunFileOssClient(AliyunOssProperties ossProperties) {
         super(ossProperties.getAccessKeyId(),ossProperties.getAccessKeySecret(),
                 ossProperties.getEndpoint(),ossProperties.getBucket());
         this.assertHost = ossProperties.getAssertHost();
         this.baseFolder = ossProperties.getBaseFolder();
     }
 
-    public String getAssertFileUrl(String key){
-        return getOssFileUrl(key);
+    public String getAssertFilePath(String key){
+        return getOssFilePath(key);
     }
 
     @Override
@@ -34,5 +34,4 @@ public class FileOssClient extends OssGenerator {
     public String getOssEndpoint(){
         return assertHost;
     }
-
 }

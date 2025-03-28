@@ -1,4 +1,4 @@
-package com.strong.system.component.file.oss;
+package com.strong.common.file.oss.aliyun;
 
 import com.aliyun.oss.ClientConfiguration;
 import com.aliyun.oss.ClientException;
@@ -25,10 +25,13 @@ import com.aliyun.oss.model.ResponseHeaderOverrides;
 import com.aliyun.oss.model.UploadPartRequest;
 import com.aliyun.oss.model.UploadPartResult;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -39,14 +42,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy;
+import java.util.concurrent.TimeUnit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-public class OssGenerator {
-    private static final Logger log = LoggerFactory.getLogger(OssGenerator.class);
+public class AliyunOssGenerator {
+    private static final Logger log = LoggerFactory.getLogger(AliyunOssGenerator.class);
     private String accessKeyId;
     private String secretAccessKey;
     private String ossServer;
@@ -55,7 +55,7 @@ public class OssGenerator {
     private String bucketOssEndpoint;
     public OSSClient client;
 
-    public OssGenerator(String accessKeyId, String secretAccessKey, String ossServer, String bucketName) {
+    public AliyunOssGenerator(String accessKeyId, String secretAccessKey, String ossServer, String bucketName) {
         this.accessKeyId = accessKeyId;
         this.secretAccessKey = secretAccessKey;
         this.ossServer = ossServer;
@@ -149,8 +149,12 @@ public class OssGenerator {
         return this.bucketOssEndpoint;
     }
 
-    public String getOssFileUrl(String key) {
-        return this.getOssEndpoint() + this.folder() + key;
+    public String getBucketName(){
+        return this.bucketName;
+    }
+
+    public String getOssFilePath(String key) {
+        return this.folder() + key;
     }
 
     public String getSecretOssFileUrlByOrgUrl(String orgUrl, String showFileName, int seconds) {
@@ -256,7 +260,7 @@ public class OssGenerator {
             for (int i = 0; i < partCount; ++i) {
                 long start = 5242880L * (long) i;
                 long curPartSize = 5242880L < uploadFile.length() - start ? 5242880L : uploadFile.length() - start;
-                pool.execute(new OssGenerator.UploadPartThread(this.client, this.bucketName, this.folder() + key, uploadFile, uploadId, i + 1, 5242880L * (long) i, curPartSize, eTags));
+                pool.execute(new UploadPartThread(this.client, this.bucketName, this.folder() + key, uploadFile, uploadId, i + 1, 5242880L * (long) i, curPartSize, eTags));
             }
 
             pool.shutdown();
@@ -297,6 +301,10 @@ public class OssGenerator {
         });
         CompleteMultipartUploadRequest completeMultipartUploadRequest = new CompleteMultipartUploadRequest(this.bucketName, this.folder() + key, uploadId, eTags);
         this.client.completeMultipartUpload(completeMultipartUploadRequest);
+    }
+
+    public URL generatePresignedUrl(GeneratePresignedUrlRequest request) {
+        return this.client.generatePresignedUrl(request);
     }
 
     private static class UploadPartThread implements Runnable {
@@ -342,7 +350,7 @@ public class OssGenerator {
                 UploadPartResult uploadPartResult = this.client.uploadPart(uploadPartRequest);
                 this.eTags.add(uploadPartResult.getPartETag());
             } catch (Exception var14) {
-                OssGenerator.log.error(var14.getMessage(), var14);
+                AliyunOssGenerator.log.error(var14.getMessage(), var14);
             } finally {
                 if (in != null) {
                     try {

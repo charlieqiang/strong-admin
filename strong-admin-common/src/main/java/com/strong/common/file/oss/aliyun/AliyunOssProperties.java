@@ -1,4 +1,4 @@
-package com.strong.system.component.file.oss;
+package com.strong.common.file.oss.aliyun;
 
 import com.aliyun.oss.OSSClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "aliyun.oss")
 @ConditionalOnClass(OSSClient.class)
-public class OssProperties {
+public class AliyunOssProperties {
 
     private String accessKeyId;
     private String accessKeySecret;

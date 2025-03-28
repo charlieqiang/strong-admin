@@ -13,9 +13,9 @@ public interface FileService {
      * 附件上传
      *
      * @param file
-     * @return fileUrl
+     * @return filePath
      */
-    String upload(MultipartFile file);
+    String uploadToAliyun(MultipartFile file);
 
     /**
      * 附件下载
@@ -24,5 +24,13 @@ public interface FileService {
      * @param filename 文件名
      * @param response HTTP响应对象
      */
-    void download(String date, String filename, HttpServletResponse response);
+    void downloadFromAliyun(String date, String filename, HttpServletResponse response);
+
+    /**
+     * 通过文件路径获取实际资源地址
+     *
+     * @param filePath
+     * @return
+     */
+    String convertPathToUrl(String filePath);
 }

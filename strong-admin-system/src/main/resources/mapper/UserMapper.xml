@@ -65,8 +65,8 @@
     </select>
 
     <insert id="addUser" parameterType="com.strong.system.entity.User">
-        INSERT INTO user (id, username, password, account)
-        VALUES (#{id}, #{username}, #{password}, #{account})
+        INSERT INTO user (id, username, password, account, avatar)
+        VALUES (#{id}, #{username}, #{password}, #{account}, #{avatar})
     </insert>
 
     <insert id="addUserRoleBatch" parameterType="java.util.List">

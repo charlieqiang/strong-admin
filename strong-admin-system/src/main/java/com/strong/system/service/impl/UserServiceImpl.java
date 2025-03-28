@@ -9,8 +9,10 @@ import com.strong.common.util.page.PageUtil;
 import com.strong.common.util.snowflakeid.SnowflakeIdWorker;
 import com.strong.system.entity.User;
 import com.strong.system.entity.UserRole;
+import com.strong.system.mapper.RoleMapper;
 import com.strong.system.mapper.UserMapper;
 import com.strong.system.param.UserParam;
+import com.strong.system.service.FileService;
 import com.strong.system.service.UserService;
 import com.strong.system.vo.UserRoleVo;
 import com.strong.system.vo.UserVo;
@@ -38,6 +40,9 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Autowired
+    private FileService fileService;
+
+    @Autowired
     private ApiSecurityService apiSecurityService;
 
     @Override
@@ -51,6 +56,7 @@ public class UserServiceImpl implements UserService {
         }
         UserVo userVo = new UserVo();
         BeanUtils.copyProperties(user, userVo);
+        userVo.setAvatar(fileService.convertPathToUrl(user.getAvatar()));
         return userVo;
     }
 
