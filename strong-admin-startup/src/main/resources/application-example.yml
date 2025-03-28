@@ -38,5 +38,3 @@ aliyun:
     endpoint: oss-cn-hangzhou.aliyuncs.com
     bucket: strong-admin
     baseFolder: file/
-    assertHost: http://localhost:8080/
-    callbackUrl: http://localhost:8080/

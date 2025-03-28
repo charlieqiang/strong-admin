@@ -18,8 +18,6 @@ public class AliyunOssProperties {
     private String endpoint;
     private String bucket;
     private String baseFolder;
-    private String assertHost;
-    private String callbackUrl;
 
     public String getAccessKeyId() {
         return accessKeyId;
@@ -59,21 +57,5 @@ public class AliyunOssProperties {
 
     public void setBaseFolder(String baseFolder) {
         this.baseFolder = baseFolder;
-    }
-
-    public String getAssertHost() {
-        return assertHost;
-    }
-
-    public void setAssertHost(String assertHost) {
-        this.assertHost = assertHost;
-    }
-
-    public String getCallbackUrl() {
-        return callbackUrl;
-    }
-
-    public void setCallbackUrl(String callbackUrl) {
-        this.callbackUrl = callbackUrl;
     }
 }
