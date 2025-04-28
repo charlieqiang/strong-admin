@@ -3,9 +3,9 @@ package com.strong.security.service.impl;
 import com.strong.api.security.dto.LoginUserDto;
 import com.strong.api.security.service.ApiSecurityService;
 import com.strong.common.exception.CustomizeException;
+import com.strong.security.build.LoginUserToDtoBuilder;
 import com.strong.security.entity.LoginUser;
 import com.strong.security.utils.SecurityUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,9 +21,7 @@ public class ApiSecurityServiceImpl implements ApiSecurityService {
             if (loginUser == null) {
                 return null;
             }
-            LoginUserDto loginUserDto = new LoginUserDto();
-            BeanUtils.copyProperties(loginUser, loginUserDto);
-            return loginUserDto;
+            return LoginUserToDtoBuilder.build(loginUser);
         } catch (Exception e) {
             throw new CustomizeException("获取用户信息异常");
         }

@@ -1,11 +1,12 @@
 package com.strong.system.service.impl;
 
 import com.strong.common.util.snowflakeid.SnowflakeIdWorker;
+import com.strong.system.build.MenuToVoBuilder;
+import com.strong.system.build.MenuVoToEntityBuilder;
 import com.strong.system.entity.Menu;
 import com.strong.system.mapper.MenuMapper;
 import com.strong.system.service.MenuService;
 import com.strong.system.vo.MenuVo;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -31,9 +32,7 @@ public class MenuServiceImpl implements MenuService {
         }
         List<MenuVo> menuVos = new ArrayList<>();
         for (Menu menu : parents) {
-            MenuVo menuVo = new MenuVo();
-            BeanUtils.copyProperties(menu, menuVo);
-            menuVo.setTitle(menu.getName());
+            MenuVo menuVo = MenuToVoBuilder.build(menu);
             menuVos.add(menuVo);
         }
         for (MenuVo menu : menuVos) {
@@ -52,9 +51,7 @@ public class MenuServiceImpl implements MenuService {
         }
         List<MenuVo> children = new ArrayList<>();
         for (Menu menuChild : menuChildren) {
-            MenuVo menuChildVo = new MenuVo();
-            BeanUtils.copyProperties(menuChild, menuChildVo);
-            menuChildVo.setTitle(menuChild.getName());
+            MenuVo menuChildVo = MenuToVoBuilder.build(menuChild);
             children.add(menuChildVo);
         }
         menuVo.setChildren(children);
@@ -77,9 +74,7 @@ public class MenuServiceImpl implements MenuService {
         if (menuVo == null) {
             return;
         }
-        Menu menu = new Menu();
-        BeanUtils.copyProperties(menuVo, menu);
-        menu.setName(menuVo.getTitle());
+        Menu menu = MenuVoToEntityBuilder.build(menuVo);
         menuMapper.updateMenu(menu);
         
         List<MenuVo> children = menuVo.getChildren();
@@ -95,10 +90,8 @@ public class MenuServiceImpl implements MenuService {
         if (menuVo == null) {
             return;
         }
-        Menu menu = new Menu();
-        BeanUtils.copyProperties(menuVo, menu);
+        Menu menu = MenuVoToEntityBuilder.build(menuVo);
         menu.setId(String.valueOf(SnowflakeIdWorker.getInstance().nextId()));
-        menu.setName(menuVo.getTitle());
         menuMapper.insertMenu(menu);
     }
 }

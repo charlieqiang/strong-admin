@@ -18,7 +18,7 @@ import javax.annotation.Resource;
 /**
  * 登录校验方法
  *
- * @author ruoyi
+ * @author charlie
  */
 @Component
 public class LoginServiceImpl implements LoginService {

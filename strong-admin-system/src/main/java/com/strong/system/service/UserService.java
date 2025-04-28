@@ -12,7 +12,7 @@ import com.strong.system.vo.UserVo;
  **/
 public interface UserService {
     /**
-     * 通过id查询用户
+     * 通过id查询用户（不携带roles信息）
      *
      * @param id
      * @return

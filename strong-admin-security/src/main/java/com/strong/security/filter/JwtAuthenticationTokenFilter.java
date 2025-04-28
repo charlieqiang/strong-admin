@@ -18,7 +18,7 @@ import java.io.IOException;
 /**
  * token过滤器 验证token有效性
  *
- * @author ruoyi
+ * @author charlie
  */
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {

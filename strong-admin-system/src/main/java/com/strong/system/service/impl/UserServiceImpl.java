@@ -3,13 +3,16 @@ package com.strong.system.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.strong.api.security.service.ApiSecurityService;
+import com.strong.api.system.dto.UserDto;
 import com.strong.common.entity.result.PageResult;
 import com.strong.common.exception.CustomizeException;
 import com.strong.common.util.page.PageUtil;
 import com.strong.common.util.snowflakeid.SnowflakeIdWorker;
+import com.strong.system.build.UserParamToEntityBuilder;
+import com.strong.system.build.UserToDtoBuilder;
+import com.strong.system.build.UserToVoBuilder;
 import com.strong.system.entity.User;
 import com.strong.system.entity.UserRole;
-import com.strong.system.mapper.RoleMapper;
 import com.strong.system.mapper.UserMapper;
 import com.strong.system.param.UserParam;
 import com.strong.system.service.FileService;
@@ -17,7 +20,6 @@ import com.strong.system.service.UserService;
 import com.strong.system.vo.UserRoleVo;
 import com.strong.system.vo.UserVo;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,8 +56,8 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             return null;
         }
-        UserVo userVo = new UserVo();
-        BeanUtils.copyProperties(user, userVo);
+        UserVo userVo = UserToVoBuilder.build(user);
+        // 设置头像url（带有效期）
         userVo.setAvatar(fileService.convertPathToUrl(user.getAvatar()));
         return userVo;
     }
@@ -81,8 +83,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public PageResult getUserPage(UserParam userParam, Integer pageNum, Integer pageSize) {
-        User user = new User();
-        BeanUtils.copyProperties(userParam, user);
+        User user = UserParamToEntityBuilder.build(userParam);
         PageHelper.startPage(pageNum, pageSize);
         List<User> userList = userMapper.getUserPage(user);
         List<UserVo> userInfoVoList = buildUserInfoVoList(userList);
@@ -93,8 +94,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void addUser(UserParam userParam) {
-        User user = new User();
-        BeanUtils.copyProperties(userParam, user);
+        User user = UserParamToEntityBuilder.build(userParam);
         user.setId(String.valueOf(SnowflakeIdWorker.getInstance().nextId()));
         user.setPassword(apiSecurityService.encryptPassword(userParam.getPassword()));
         userMapper.addUser(user);
@@ -124,11 +124,7 @@ public class UserServiceImpl implements UserService {
             userRolesMap = userRoleList.stream().collect(Collectors.groupingBy(UserRoleVo::getUserId));
         }
         for (User user : userList) {
-            UserVo userInfoVo = new UserVo();
-            userInfoVo.setId(user.getId());
-            userInfoVo.setAccount(user.getAccount());
-            userInfoVo.setUsername(user.getUsername());
-            userInfoVo.setAvatar(user.getAvatar());
+            UserVo userInfoVo = UserToVoBuilder.build(user);
             if (userRolesMap.containsKey(user.getId())) {
                 List<UserRoleVo> userRoleVos = userRolesMap.get(user.getId());
                 userInfoVo.setRoles(userRoleVos.stream().map(UserRoleVo::getRoleCode).collect(Collectors.toList()));
@@ -154,8 +150,7 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isBlank(userParam.getId())) {
             throw new CustomizeException("更新用户失败：id缺失");
         }
-        User user = new User();
-        BeanUtils.copyProperties(userParam, user);
+        User user = UserParamToEntityBuilder.build(userParam);
         if (StringUtils.isNotBlank(userParam.getPassword())) {
             user.setPassword(apiSecurityService.encryptPassword(userParam.getPassword()));
         }

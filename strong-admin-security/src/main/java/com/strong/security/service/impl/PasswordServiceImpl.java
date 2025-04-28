@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 /**
  * 登录密码方法
  *
- * @author ruoyi
+ * @author charlie
  */
 @Service
 public class PasswordServiceImpl implements PasswordService {

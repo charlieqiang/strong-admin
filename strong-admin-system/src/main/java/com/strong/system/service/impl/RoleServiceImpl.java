@@ -1,6 +1,9 @@
 package com.strong.system.service.impl;
 
 import com.strong.common.util.snowflakeid.SnowflakeIdWorker;
+import com.strong.system.build.MenuToVoBuilder;
+import com.strong.system.build.RoleToVoBuilder;
+import com.strong.system.build.RoleVoToEntityBuilder;
 import com.strong.system.entity.Menu;
 import com.strong.system.entity.Role;
 import com.strong.system.entity.RoleMenu;
@@ -10,7 +13,6 @@ import com.strong.system.mapper.UserMapper;
 import com.strong.system.service.RoleService;
 import com.strong.system.vo.RoleVo;
 import com.strong.system.vo.MenuVo;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,8 +48,7 @@ public class RoleServiceImpl implements RoleService {
 
         List<RoleVo> roleVoList = new ArrayList<>();
         for (Role role : roleList) {
-            RoleVo roleVo = new RoleVo();
-            BeanUtils.copyProperties(role, roleVo);
+            RoleVo roleVo = RoleToVoBuilder.build(role);
             roleVoList.add(roleVo);
             List<Menu> parentMenuList = menuMapper.queryParentsByRoleId(role.getId());
             if (CollectionUtils.isEmpty(parentMenuList)) {
@@ -56,9 +57,7 @@ public class RoleServiceImpl implements RoleService {
             }
             List<MenuVo> menuVos = new ArrayList<>();
             for (Menu parentMenu : parentMenuList) {
-                MenuVo menuVo = new MenuVo();
-                BeanUtils.copyProperties(parentMenu, menuVo);
-                menuVo.setTitle(parentMenu.getName());
+                MenuVo menuVo = MenuToVoBuilder.build(parentMenu);
                 menuVos.add(menuVo);
             }
             for (MenuVo menuVo : menuVos) {
@@ -79,9 +78,7 @@ public class RoleServiceImpl implements RoleService {
         }
         List<MenuVo> children = new ArrayList<>();
         for (Menu menu : menuList) {
-            MenuVo child = new MenuVo();
-            BeanUtils.copyProperties(menu, child);
-            child.setTitle(menu.getName());
+            MenuVo child = MenuToVoBuilder.build(menu);
             children.add(child);
         }
         menuVo.setChildren(children);
@@ -93,11 +90,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateRole(RoleVo roleVo) {
-        Role role = new Role();
-        role.setId(roleVo.getId());
-        role.setName(roleVo.getName());
-        role.setCode(roleVo.getCode());
-        role.setDescription(roleVo.getDescription());
+        Role role = RoleVoToEntityBuilder.build(roleVo);
         roleMapper.updateRole(role);
         menuMapper.deleteRoleMenuByRoleId(roleVo.getId());
         generateRoleMenuRelation(roleVo);
@@ -106,11 +99,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public RoleVo addRole(RoleVo roleVo) {
-        Role role = new Role();
-        role.setId(String.valueOf(SnowflakeIdWorker.getInstance().nextId()));
-        role.setName(roleVo.getName());
-        role.setCode(roleVo.getCode());
-        role.setDescription(roleVo.getDescription());
+        Role role = RoleVoToEntityBuilder.build(roleVo);
         roleMapper.insertRole(role);
         roleVo.setId(role.getId());
         generateRoleMenuRelation(roleVo);
